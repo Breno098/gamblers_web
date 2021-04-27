@@ -17,27 +17,15 @@ class OfficialController extends Controller
 {
     public function competitions()
     {
-        $competitions = Competition::where('active', 1)->orderBy('name')->get();
-
-        return Inertia::render('Adm/Official/competitions', [
-            'competitions' => $competitions,
+        return view('adm.official.index', [
+            'competitions' => Competition::where('active', 1)->orderBy('name')->get()
         ]);
     }
 
-    public function competition(Request $request)
+    public function competitionGames(Competition $competition)
     {
-        $games = Game::where('competition_id', $request->competition_id)->orderBy('date', 'desc')->get();
-        foreach ($games as &$game) {
-            $game->competition;
-            $game->stadium->country;
-            $game->teamHome;
-            $game->teamGuest;
-
-            $game->addScoreboardOfficial();
-        }
-
-        return Inertia::render('Adm/Official/competition', [
-            'games' => $games,
+        return view('adm.official.competitionGames', [
+            'games' => Game::where('competition_id', $competition->id)->orderBy('date', 'desc')->get(),
         ]);
     }
 

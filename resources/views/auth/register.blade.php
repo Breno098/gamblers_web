@@ -1,4 +1,4 @@
-@extends('layout.auth')
+@extends('auth.layout')
 
 @section('content')
     <div id="intro" class="bg-image shadow-2-strong">

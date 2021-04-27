@@ -49,31 +49,8 @@ class Game extends Model
         return $this->hasMany(Scoreboard::class);
     }
 
-    public function addScoreboardOfficial()
+    public function getScoreboardOfficialAttribute()
     {
-        $this->scoreboard_official = $this->scoreboard()->where('game_id', $this->id)->where('type', 'official')->first();
-    }
-
-    public function addScoreboardOfficialAndGoals()
-    {
-        $this->addScoreboardOfficial();
-        $goals = $this->scoreboard_official->goals ?? [];
-        foreach ($goals as &$goal) {
-            $goal->player;
-        }
-    }
-
-    public function addScoreboardByUserId($user_id)
-    {
-        $this->scoreboard_bet = $this->scoreboard()->where('game_id', $this->id)->where('user_id', $user_id)->first();
-    }
-
-    public function addscoreboardAndGoalsByUserId($user_id)
-    {
-        $this->addScoreboardByUserId($user_id);
-        $goals = $this->scoreboard_bet->goals ?? [];
-        foreach ($goals as &$goal) {
-            $goal->player;
-        }
+        return $this->scoreboard()->where('game_id', $this->id)->where('type', 'official')->first();
     }
 }

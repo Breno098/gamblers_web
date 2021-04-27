@@ -7,10 +7,8 @@ use App\Http\Requests\Adm\TeamRequest;
 use App\Models\Competition;
 use App\Models\Country;
 use App\Models\Player;
-use Illuminate\Http\Request;
 use App\Models\Team;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class TeamController extends Controller
@@ -73,7 +71,7 @@ class TeamController extends Controller
         ]);
     }
 
-    public function update(Request $request, Team $team)
+    public function update(TeamRequest $request, Team $team)
     {
         $data = $request->all();
 
@@ -145,18 +143,19 @@ class TeamController extends Controller
         try {
             $team = Team::find($id);
             $competitions = $team->competitions;
-            $player = $team->players()->where('name', 'Gol Contra')->delete();
+            $player = $team->players()->where('name', 'Gol Contra')->first();
 
             $team->competitions()->sync([]);
+            $team->players()->where('name', 'Gol Contra')->delete();
             $team->delete();
 
-            return Redirect::route('adm.team.index');
+            return redirect()->route('adm.team.index');
         } catch(\Exception $e){
             $team->competitions()->sync($competitions);
+            $team->player()->create($player);
 
             return redirect()->route('adm.error', [
                 'error' => $e->getCode() === '23000' ? "Time vinculado a outro registro." : $e->getMessage(),
-                'error' => $e->getMessage()
             ]);
         }
     }

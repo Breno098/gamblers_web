@@ -4,16 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
         <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-light_green.min.css" /> <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_orange-green.min.css" />
-
-        <link rel="stylesheet" href="{{ asset('/getmdl/getmdl-select.min.css') }} ">
-        <script defer src="{{ asset('getmdl/getmdl-select.min.js') }}"></script>
-
-        <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
-        <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 
         <title>Gamblers</title>
 
@@ -49,6 +42,58 @@
             }
             .mdl-textfield--file .mdl-button--file {
                 right: 0;
+                background: rgba(0, 0, 0, 0.2)
+            }
+
+            .table-responsive {
+                min-height: .01%;
+                overflow-x: auto;
+            }
+
+            @media screen and (max-width: 767px) {
+                .table-responsive {
+                    width: 100%;
+                    margin-bottom: 15px;
+                    overflow-y: hidden;
+                    -ms-overflow-style: -ms-autohiding-scrollbar;
+                    border: 1px solid #ddd;
+                }
+                .table-responsive > .table {
+                    margin-bottom: 0;
+                }
+                .table-responsive > .table > thead > tr > th,
+                .table-responsive > .table > tbody > tr > th,
+                .table-responsive > .table > tfoot > tr > th,
+                .table-responsive > .table > thead > tr > td,
+                .table-responsive > .table > tbody > tr > td,
+                .table-responsive > .table > tfoot > tr > td {
+                    white-space: nowrap;
+                }
+                .table-responsive > .table-bordered {
+                    border: 0;
+                }
+                .table-responsive > .table-bordered > thead > tr > th:first-child,
+                .table-responsive > .table-bordered > tbody > tr > th:first-child,
+                .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+                .table-responsive > .table-bordered > thead > tr > td:first-child,
+                .table-responsive > .table-bordered > tbody > tr > td:first-child,
+                .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+                    border-left: 0;
+                }
+                .table-responsive > .table-bordered > thead > tr > th:last-child,
+                .table-responsive > .table-bordered > tbody > tr > th:last-child,
+                .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+                .table-responsive > .table-bordered > thead > tr > td:last-child,
+                .table-responsive > .table-bordered > tbody > tr > td:last-child,
+                .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+                    border-right: 0;
+                }
+                .table-responsive > .table-bordered > tbody > tr:last-child > th,
+                .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+                .table-responsive > .table-bordered > tbody > tr:last-child > td,
+                .table-responsive > .table-bordered > tfoot > tr:last-child > td {
+                    border-bottom: 0;
+                }
             }
 
         </style>
@@ -88,20 +133,58 @@
                 <span class="mdl-layout-title">Gamblers</span>
                 <nav class="mdl-navigation">
 
+                    <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
+
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.dashboard') }}">
                         <i class="mdl-color-text--black material-icons" role="presentation">home</i>
                         DashBoard
                     </a>
 
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.official.competitions') }}">
+                        <i class="mdl-color-text--black material-icons" role="presentation">sports_soccer</i>
+                        Jogos Oficiais
+                    </a>
+
+                    <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
+
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">public</i>
-                        Países
+                        País
                     </a>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.team.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">groups</i>
-                        Times
+                        Time
                     </a>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.player.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">person</i>
+                        Jogador
+                    </a>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.stadium.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">home</i>
+                        Estádio
+                    </a>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.competition.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">emoji_events</i>
+                        Competição
+                    </a>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.game.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">sports</i>
+                        Jogo
+                    </a>
+
+                    <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('logout') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">group</i>
+                        Usuários
+                    </a>
+
+                    <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('logout') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">logout</i>
@@ -117,6 +200,7 @@
                 </div>
             </main>
         </div>
+
         <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     </body>
 </html>

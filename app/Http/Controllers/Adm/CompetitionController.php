@@ -5,79 +5,75 @@ namespace App\Http\Controllers\Adm;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adm\CompetitionRequest;
 use App\Models\Competition;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Exception;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 
 class CompetitionController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Adm/Competition', [
-            'competitions' => Competition::where('active', 1)->orderBy('name')->get()
+        return view('adm.competition.index', [
+            'competitions' => Competition::where('active', 1)->orderBy('name')->paginate(10)
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Adm/Competition/create');
+        return view('adm.competition.form');
     }
 
     public function store(CompetitionRequest $request)
     {
-        $name_photo = $request->file('photo') ? Carbon::now()->format('YmdHis') . $request->file('photo')->getClientOriginalName() : false;
+        $data = $request->all();
+        $data['active'] = 1;
 
-        if($name_photo && !$request->file('photo')->storeAs('competitions', $name_photo)){
-            return $this->redirectErrorPage("Erro ao fazer o upload da foto");
-        }
+        if($request->photo){
+            $name_photo = Carbon::now()->format('YmdHis') . $request->file('photo')->getClientOriginalName();
 
-        Competition::create([
-            'name' => $request->name,
-            'active' => 1,
-            'name_photo' => $name_photo,
-            'season' => $request->season,
-        ]);
-
-        return Redirect::route('adm.competition.index');
-    }
-
-    public function edit($id)
-    {
-        return Inertia::render('Adm/Competition/create', [
-            'competition' => Competition::findOrFail($id)
-        ]);
-    }
-
-    public function update(Request $request, $id)
-    {
-    }
-
-    public function updateWithImage(CompetitionRequest $request)
-    {
-        $name_photo = $request->file('photo') ? Carbon::now()->format('YmdHis') . $request->file('photo')->getClientOriginalName() : false;
-
-        if($name_photo && !$request->file('photo')->storeAs('competitions', $name_photo)){
-            return $this->redirectErrorPage("Erro ao fazer o upload da foto");
-        }
-
-        if($request->id){
-            $competition = Competition::find($request->id);
-
-            if($name_photo && Storage::exists('competitions/' . $competition->name_photo)){
-                Storage::delete('competitions/' . $competition->name_photo);
+            if(!$request->file('photo')->storeAs('public/competitions', $name_photo)){
+                return redirect()->route('adm.error', [
+                    'error' => "Erro ao fazer o upload da foto"
+                ]);
             }
 
-            $competition->update([
-                'name' => $request->name,
-                'name_photo' => $name_photo ?: $competition->name_photo,
-                'season' => $request->season,
-            ]);
-
-            return Redirect::route('adm.competition.index');
+            $data['name_photo'] = $name_photo;
         }
+
+        Competition::create($data);
+
+        return redirect()->route('adm.competition.index');
+    }
+
+    public function edit(Competition $competition)
+    {
+        return view('adm.competition.form', [
+            'competition' => $competition
+        ]);
+    }
+
+    public function update(CompetitionRequest $request, Competition $competition)
+    {
+        $data = $request->all();
+
+        if($request->photo){
+            $name_photo = Carbon::now()->format('YmdHis') . $request->file('photo')->getClientOriginalName();
+
+            if(Storage::exists('public/competitions/' . $competition->name_photo)){
+                Storage::delete('public/competitions/' . $competition->name_photo);
+            }
+
+            if(!$request->file('photo')->storeAs('public/competitions/', $name_photo)){
+                return redirect()->route('adm.error', [
+                    'error' => "Erro ao fazer o upload da foto"
+                ]);
+            }
+
+            $data['name_photo'] = $name_photo;
+        }
+
+        $competition->update($data);
+
+        return redirect()->route('adm.competition.index');
     }
 
     public function show($id)
@@ -85,9 +81,15 @@ class CompetitionController extends Controller
         return $this->index();
     }
 
-    public function destroy($id)
+    public function destroy(Competition $competition)
     {
-        Competition::find($id)->update([ 'active' => 0 ]);
-        return Redirect::route('adm.competition.index');
+        try {
+            $competition->update([ 'active' => 0 ]);
+            redirect()->route('adm.competition.index');
+        } catch(\Exception $e){
+            return redirect()->route('adm.error', [
+                'error' => $e->getCode() === '23000' ? "Registro vinculado a outro registro." : $e->getMessage(),
+            ]);
+        }
     }
 }

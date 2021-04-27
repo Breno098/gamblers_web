@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Breno',
             'email' => 'breno@email.com',
-            'password' => Hash::make('aaaaaaaa')
+            'password' => Hash::make('aaaaaaaa'),
+            'type' => 'adm'
         ]);
 
         $this->createCountries();

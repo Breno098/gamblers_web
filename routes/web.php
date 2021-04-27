@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\Adm\CompetitionController;
 use App\Http\Controllers\Adm\CountryController;
 use App\Http\Controllers\Adm\DashboardController;
+use App\Http\Controllers\Adm\GameController;
+use App\Http\Controllers\Adm\OfficialController;
+use App\Http\Controllers\Adm\PlayerController;
+use App\Http\Controllers\Adm\StadiumController;
 use App\Http\Controllers\Adm\TeamController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
@@ -37,11 +42,12 @@ Route::prefix('adm')->name('adm.')->middleware('auth')->group(function (){
 
     Route::resource('country', CountryController::class);
     Route::resource('team', TeamController::class);
+    Route::resource('player', PlayerController::class);
+    Route::resource('stadium', StadiumController::class);
+    Route::resource('competition', CompetitionController::class);
+    Route::resource('game', GameController::class);
 
-    // Route::get('/adm/country', [CountryController::class, 'index'])->name('adm.country.index');
-    // Route::get('/adm/country/createOrEdit/{country?}', [CountryController::class, 'createOrEdit'])->name('adm.country.createOrEdit');
-
-    // Route::post('/adm/country/store', [CountryController::class, 'store'])->name('adm.country.store');
-    // Route::post('/adm/country/delete/{country}', [CountryController::class, 'destroy'])->name('adm.country.delete');
+    Route::get('/official/competitions', [OfficialController::class, 'competitions'])->name('official.competitions');
+    Route::get('/official/competitionGames/{competition}', [OfficialController::class, 'competitionGames'])->name('official.competitionGames');
 
 });

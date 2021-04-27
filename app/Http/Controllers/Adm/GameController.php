@@ -9,83 +9,51 @@ use App\Models\Country;
 use App\Models\Game;
 use App\Models\Stadium;
 use App\Models\Team;
-use Inertia\Inertia;
-use Exception;
-use Illuminate\Support\Facades\Redirect;
 
 class GameController extends Controller
 {
     public function index()
     {
-        $games = Game::orderBy('date')->get();
-        foreach ($games as &$game) {
-            $game->country;
-            $game->competition;
-            $game->stadium->country;
-            $game->teamHome->country;
-            $game->teamGuest->country;
-            $game->goals;
-            $game->scoreboard = $game->scoreboard()->where('type', 'official')->first();
-        }
-
-        return Inertia::render('Adm/Game', [
-            'games' => $games,
+        return view('adm.game.index', [
+            'games' => Game::orderBy('status', 'desc')->orderBy('date')->paginate(10)
         ]);
     }
 
     public function create()
     {
-        return Inertia::render('Adm/Game/create', [
-            'country' => Country::orderBy('name')->get(),
+        return view('adm.game.form', [
+            'countries' => Country::orderBy('name')->get(),
             'teams' => Team::orderBy('name')->get(),
             'stadia' => Stadium::orderBy('name')->get(),
-            'competitions' => Competition::where('active', 1)->orderBy('name')->get()
+            'competitions' => Competition::where('active', 1)->orderBy('name')->get(),
+            'stages' => ['oitavas', 'quartas', 'semi', 'final', 'fase de grupo']
         ]);
     }
 
     public function store(GameRequest $request)
     {
-        Game::create([
-            'team_home_id' => $request->team_home_id,
-            'team_guest_id' => $request->team_guest_id,
-            'stadium_id' => $request->stadium_id,
-            'competition_id' => $request->competition_id,
-            'date' => $request->date,
-            'time' => $request->time,
-            'stage' => $request->stage,
-            'status' => 'open'
-        ]);
+        Game::create($request->all());
 
-        return Redirect::route('adm.game.index');
+        return redirect()->route('adm.game.index');
     }
 
-    public function edit($id)
+    public function edit(Game $game)
     {
-        return Inertia::render('Adm/Game/create', [
-            'game' => Game::findOrFail($id),
-            'country' => Country::orderBy('name')->get(),
+        return view('adm.game.form', [
+            'game' => $game,
+            'countries' => Country::orderBy('name')->get(),
             'teams' => Team::orderBy('name')->get(),
             'stadia' => Stadium::orderBy('name')->get(),
-            'competitions' => Competition::where('active', 1)->orderBy('name')->get()
+            'competitions' => Competition::where('active', 1)->orderBy('name')->get(),
+            'stages' => ['oitavas', 'quartas', 'semi', 'final', 'fase de grupo']
         ]);
     }
 
-    public function update(GameRequest $request, $id)
+    public function update(GameRequest $request, Game $game)
     {
-        if($id){
-            Game::find($id)->update([
-                'team_home_id' => $request->team_home_id,
-                'team_guest_id' => $request->team_guest_id,
-                'stadium_id' => $request->stadium_id,
-                'competition_id' => $request->competition_id,
-                'date' => $request->date,
-                'time' => $request->time,
-                'stage' => $request->stage,
-                'status' => 'open'
-            ]);
+        $game->update($request->all());
 
-            return Redirect::route('adm.game.index');
-        }
+        return redirect()->route('adm.game.index');
     }
 
     public function show($id)
@@ -93,17 +61,15 @@ class GameController extends Controller
         return $this->index();
     }
 
-    public function destroy($id)
+    public function destroy(Game $game)
     {
         try {
-            Game::find($id)->delete();
-        } catch(Exception $e){
-            return $this->redirectErrorPage(
-                $e->getCode() === '23000' ? "Para deletar o registro, atualize ou exclua suas dependencias." : $e->getMessage(),
-                $e->getCode()
-            );
+            $game->delete();
+            return redirect()->route('adm.game.index');
+        } catch(\Exception $e){
+            return redirect()->route('adm.error', [
+                'error' => $e->getCode() === '23000' ? "Para deletar o registro, atualize ou exclua suas dependencias." : $e->getMessage(),
+            ]);
         }
-
-        return Redirect::route('adm.game.index');
     }
 }
