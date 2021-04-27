@@ -34,7 +34,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
 
             if(Auth::user()->type === 'adm'){
-                return redirect('/adm/dashboard');
+                return redirect()->route('adm.dashboard');
             }
         }
 
@@ -51,9 +51,12 @@ class LoginController extends Controller
 
         $validatedData['password'] = Hash::make($request->password);
 
-        $user = User::create($validatedData);
+        if( !User::create($validatedData)) {
+            return redirect('/register')->with('error_register', 'Erro ao se registrar, tente novamente.');
+        };
 
-        return response(['user' => $user], 201);
+        return redirect()->route('adm.dashboard');
+
     }
 
 

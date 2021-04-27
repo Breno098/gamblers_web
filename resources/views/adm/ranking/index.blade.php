@@ -6,7 +6,7 @@
         @foreach ($competitions as $competition)
             <a
                 class="mdl-cell mdl-cell--8-col mdl-card mdl-shadow--16dp"
-                href="{{ route('adm.official.competitionGames', ['competition' => $competition]) }}"
+                href="{{ route('adm.ranking.competition', ['competition' => $competition]) }}"
                 style="text-decoration: none"
             >
                 <div

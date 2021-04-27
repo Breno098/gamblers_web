@@ -15,10 +15,6 @@
                     <div style="font-size: 28px; font-weight: 600; padding: 30px; text-align: center" class="mdl-color-text--primary">
                         Gamblers
                     </div>
-                    {{-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" id="username"/>
-                        <label class="mdl-textfield__label" for="username">username</label>
-                    </div> --}}
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
                         <input class="mdl-textfield__input" id="email" name="email" value="breno@email.com"/>
                         <label class="mdl-textfield__label" for="email">Email</label>
@@ -49,7 +45,12 @@
 
     <div>
         <div class="mdl-card__actions">
-            <button class="mdl-button mdl-js-button mdl-button--primary">Registrar-se</button>
+            <a
+                class="mdl-button mdl-js-button mdl-button--primary"
+                href="{{ route('register') }}"
+            >
+                Registrar-se
+            </a>
             <button class="mdl-button mdl-js-button mdl-button--primary">Esqueci a senha</button>
         </div>
     </div>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="mdl-grid">
-
+{{--
         <div class="mdl-cell mdl-cell--12-col mdl-card  mdl-shadow--16dp">
             <div
                 class="mdl-card__title"
@@ -22,7 +22,7 @@
                                 <i class="material-icons">star</i>
                             </span>
                             <span class="mdl-list__item-text-body">
-                                &nbsp; {{ $score->user->name }}
+                                &nbsp; {{ $score->score }} | {{ $score->user->name }}
                             </span>
                         </li>
                         <hr/>
@@ -39,7 +39,7 @@
                 <i class="material-icons">share</i>
                 </button>
             </div>
-        </div>
+        </div> --}}
 
         <div class="mdl-cell mdl-cell--12-col mdl-card  mdl-shadow--16dp">
             <div

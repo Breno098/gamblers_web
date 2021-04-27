@@ -40,4 +40,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scoreboards()
+    {
+        return $this->hasMany(Scoreboard::class);
+    }
+
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
+
 }

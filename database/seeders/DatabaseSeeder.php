@@ -36,8 +36,8 @@ class DatabaseSeeder extends Seeder
         $this->createPlayers();
         $this->createStadia();
         $this->createGames();
-        // $this->createScoreboards();
-        // $this->createGoals();
+        $this->createScoreboards();
+        $this->createGoals();
     }
 
     public function createCountries()
@@ -66,21 +66,21 @@ class DatabaseSeeder extends Seeder
                 'name' => 'Champions League',
                 'season' => '2021/2022',
                 'active' => 1,
-                'name_photo' => '20210309130415champions-league.jpg'
+                'name_photo' => '20210427174101cl.jpg'
             ],
             [
                 'id' => 2,
-                'name' => 'Euro League',
+                'name' => 'Europa League',
                 'season' => '2021/2022',
                 'active' => 1,
-                'name_photo' => '20210309130455uefa-euro.jpg'
+                'name_photo' => '20210427174121el.jpg'
             ],
             [
                 'id' => 3,
                 'name' => 'Libertadores',
                 'season' => '2021',
                 'active' => 1,
-                'name_photo' => '20210309130613libertadores.png'
+                'name_photo' => '20210427174132lib.webp'
             ],
         ];
 
@@ -92,9 +92,9 @@ class DatabaseSeeder extends Seeder
     public function createTeams()
     {
         $teams = [
-            ['id' => 1, 'name' => 'Real Madrid', 'country_id' => 6, 'name_photo' => '20210305142008real.jpg'],
-            ['id' => 2, 'name' => 'Juventus', 'country_id' => 7, 'name_photo' => '20210304003317juventus.png'],
-            ['id' => 3, 'name' => 'PSG', 'country_id' => 2, 'name_photo' => '20210304003317psg.png'],
+            ['id' => 1, 'name' => 'Real Madrid', 'country_id' => 6, 'name_photo' => '20210427125605real'],
+            ['id' => 2, 'name' => 'Juventus', 'country_id' => 7, 'name_photo' => '20210427013854juventus.png'],
+            ['id' => 3, 'name' => 'PSG', 'country_id' => 2, 'name_photo' => '20210427013952psg.png'],
         ];
 
         foreach ($teams as $key => $value) {
@@ -140,6 +140,13 @@ class DatabaseSeeder extends Seeder
                 'country_id' => 8,
                 'team_id' => 1,
                 'position' => 'MEI'
+            ],
+            [
+                'id' => 6,
+                'name' => 'Benzema',
+                'country_id' => 2,
+                'team_id' => 1,
+                'position' => 'ATA'
             ],
         ];
 
@@ -203,14 +210,14 @@ class DatabaseSeeder extends Seeder
                 'team_guest_scoreboard' => 1,
                 'user_id' => 1
             ],
-            [
-                'id' => 3,
-                'type'  => 'bet',
-                'game_id' => 1,
-                'team_home_scoreboard' => 3,
-                'team_guest_scoreboard' => 1,
-                'user_id' => 2
-            ],
+            // [
+            //     'id' => 3,
+            //     'type'  => 'bet',
+            //     'game_id' => 1,
+            //     'team_home_scoreboard' => 3,
+            //     'team_guest_scoreboard' => 1,
+            //     'user_id' => 2
+            // ],
 
         ];
 
@@ -240,30 +247,30 @@ class DatabaseSeeder extends Seeder
                 'team_id' => 2,
                 'scoreboard_id' => 2,
             ],
-            [
-                'id' => 6,
-                'player_id' => 5,
-                'team_id' => 1,
-                'scoreboard_id' => 3,
-            ],
-            [
-                'id' => 7,
-                'player_id' => 4,
-                'team_id' => 1,
-                'scoreboard_id' => 3,
-            ],
-            [
-                'id' => 8,
-                'player_id' => 5,
-                'team_id' => 1,
-                'scoreboard_id' => 3,
-            ],
-            [
-                'id' => 9,
-                'player_id' => 1,
-                'team_id' => 2,
-                'scoreboard_id' => 3,
-            ],
+            // [
+            //     'id' => 6,
+            //     'player_id' => 5,
+            //     'team_id' => 1,
+            //     'scoreboard_id' => 3,
+            // ],
+            // [
+            //     'id' => 7,
+            //     'player_id' => 4,
+            //     'team_id' => 1,
+            //     'scoreboard_id' => 3,
+            // ],
+            // [
+            //     'id' => 8,
+            //     'player_id' => 5,
+            //     'team_id' => 1,
+            //     'scoreboard_id' => 3,
+            // ],
+            // [
+            //     'id' => 9,
+            //     'player_id' => 1,
+            //     'team_id' => 2,
+            //     'scoreboard_id' => 3,
+            // ],
 
         ];
 

@@ -145,6 +145,11 @@
                         Jogos Oficiais
                     </a>
 
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.ranking.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">leaderboard</i>
+                        Ranking
+                    </a>
+
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country.index') }}" >
@@ -179,7 +184,7 @@
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('logout') }}" >
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.user.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">group</i>
                         Usuários
                     </a>

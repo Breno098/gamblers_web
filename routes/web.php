@@ -6,8 +6,10 @@ use App\Http\Controllers\Adm\DashboardController;
 use App\Http\Controllers\Adm\GameController;
 use App\Http\Controllers\Adm\OfficialController;
 use App\Http\Controllers\Adm\PlayerController;
+use App\Http\Controllers\Adm\RankingController;
 use App\Http\Controllers\Adm\StadiumController;
 use App\Http\Controllers\Adm\TeamController;
+use App\Http\Controllers\Adm\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -27,7 +29,7 @@ Route::get('/', [LoginController::class, 'showForm']);
 Route::get('/login', [LoginController::class, 'showForm']);
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
-Route::get('/login', [LoginController::class, 'showFormRegister']);
+Route::get('/register', [LoginController::class, 'showFormRegister']);
 Route::post('/register', [LoginController::class, 'register'])->name('register');
 
 Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
@@ -48,6 +50,14 @@ Route::prefix('adm')->name('adm.')->middleware('auth')->group(function (){
     Route::resource('game', GameController::class);
 
     Route::get('/official/competitions', [OfficialController::class, 'competitions'])->name('official.competitions');
-    Route::get('/official/competitionGames/{competition}', [OfficialController::class, 'competitionGames'])->name('official.competitionGames');
+    Route::get('/official/competition_games/{competition}', [OfficialController::class, 'competitionGames'])->name('official.competitionGames');
+    Route::get('/official/game/{game}', [OfficialController::class, 'game'])->name('official.game');
+    Route::post('/official/calculate_score', [OfficialController::class, 'calculateScore'])->name('official.calculate_score');
+
+    Route::get('/users', [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/{user}', [UserController::class, 'info'])->name('user.info');
+
+    Route::get('/ranking', [RankingController::class, 'index'])->name('ranking.index');
+    Route::get('/ranking/{competition}', [RankingController::class, 'competition'])->name('ranking.competition');
 
 });

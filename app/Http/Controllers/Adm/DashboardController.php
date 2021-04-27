@@ -26,10 +26,11 @@ class DashboardController extends Controller
         ];
 
         $scoreboards = Scoreboard::select('user_id', 'score')
-            ->where('type', 'gambler')
+            ->where('type', 'bet')
             ->groupBy('user_id')
             ->groupBy('score')
-            ->take(5);
+            ->take(5)
+            ->get();
 
         return view('adm.dashboard.index', [
             'rules' => $rules,

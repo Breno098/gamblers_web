@@ -24,24 +24,14 @@ class OfficialController extends Controller
 
     public function competitionGames(Competition $competition)
     {
-        return view('adm.official.competitionGames', [
-            'games' => Game::where('competition_id', $competition->id)->orderBy('date', 'desc')->get(),
+        return view('adm.official.competition_games', [
+            'games' => Game::where('competition_id', $competition->id)->where('status', 'open')->orderBy('date', 'desc')->get(),
         ]);
     }
 
-    public function game(Request $request)
+    public function game(Game $game)
     {
-        $game = Game::findorFail($request->id);
-        $game->competition;
-        $game->stadium->country;
-        $game->teamHome->players;
-        $game->teamHome->country;
-        $game->teamGuest->players;
-        $game->teamGuest->country;
-
-        $game->addScoreboardOfficialAndGoals();
-
-        return Inertia::render('Adm/Official/game', [
+        return view('adm.official.game', [
             'game' => $game,
         ]);
     }
@@ -52,8 +42,7 @@ class OfficialController extends Controller
 
         $scoreService->calculate($request);
 
-        return Redirect::route('adm.official.competition', [
-            'competition_id' => $request->game['competition']['id']
-        ]);
+        return response()->json(['status' => 'success']);
+
     }
 }

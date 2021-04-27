@@ -5,9 +5,6 @@ namespace App\Services;
 use App\Models\Goal;
 use App\Models\Player;
 use App\Models\Scoreboard;
-use Illuminate\Database\Eloquent\Scope;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Log;
 
 class ScoreService
 {
@@ -21,14 +18,14 @@ class ScoreService
 
         if($scoreboard){
             $scoreboard->update([
-                'team_home_scoreboard' => count($request->goalsHome) ?? 0,
-                'team_guest_scoreboard' => count($request->goalsGuest) ?? 0
+                'team_home_scoreboard' => count($request->goalsTeamHome),
+                'team_guest_scoreboard' => count($request->goalsTeamGuest)
             ]);
         } else {
             $scoreboard = Scoreboard::create([
                 'game_id'   => $request->game['id'],
-                'team_home_scoreboard' => count($request->goalsHome) ?? 0,
-                'team_guest_scoreboard' => count($request->goalsGuest) ?? 0,
+                'team_home_scoreboard' => count($request->goalsTeamHome),
+                'team_guest_scoreboard' => count($request->goalsTeamGuest),
                 'type'      => $type,
                 'user_id'   => $user_id,
             ]);
@@ -36,8 +33,7 @@ class ScoreService
 
         Goal::where('scoreboard_id', $scoreboard->id)->delete();
 
-        $goalsHome = $request->goalsHome;
-        collect($goalsHome)->each(function($player) use ($scoreboard) {
+        collect($request->goalsTeamHome)->each(function($player) use ($scoreboard) {
             Goal::create([
                 'player_id' => $player['id'],
                 'team_id'   => $player['team_id'],
@@ -45,8 +41,7 @@ class ScoreService
             ]);
         });
 
-        $goalsGuest = $request->goalsGuest;
-        collect($goalsGuest)->each(function($player) use ($scoreboard) {
+        collect($request->goalsTeamGuest)->each(function($player) use ($scoreboard) {
             Goal::create([
                 'player_id' => $player['id'],
                 'team_id'   => $player['team_id'],
@@ -75,7 +70,7 @@ class ScoreService
 
             $bet->update([
                 'score' => $score,
-                $report = json_encode($report)
+                'report' => json_encode($report)
             ]);
 
             $bet->game()->update([
@@ -91,12 +86,12 @@ class ScoreService
         $report = [];
 
         foreach ($betGoals as $betGoal) {
-            $contiue = true;
+            $continue = true;
 
-            for ($i = 0; $i < count($officialGoals) && $contiue; $i++) {
+            for ($i = 0; $i < count($officialGoals) && $continue; $i++) {
                 if($betGoal['player_id'] === $officialGoals[$i]['player_id'] && $officialGoals[$i]['player_id']){
 
-                    $contiue = false;
+                    $continue = false;
                     $score += 0.5;
                     $officialGoals[$i]['player_id'] = null;
 
@@ -104,7 +99,7 @@ class ScoreService
 
                     $report[] = [
                         'score' => 0.5,
-                        'message' => "Acertar gol marcado de {$player->name}"
+                        'description' => "Acertar gol marcado de {$player->name}"
                     ];
                 }
             }
@@ -123,19 +118,19 @@ class ScoreService
         if($bet->team_home_scoreboard === $official->team_home_scoreboard && $bet->team_guest_scoreboard === $official->team_guest_scoreboard){
             $score = $score + 3;
             $report['score'] = 3;
-            $report['message'] = 'Acertar placar exato';
+            $report['description'] = 'Acertar placar exato';
         } else if($bet->team_home_scoreboard > $bet->team_guest_scoreboard && $official->team_home_scoreboard > $official->team_guest_scoreboard){
             $score = $score + 1;
             $report['score'] = 1;
-            $report['message'] = "Acertar vitória do time mandante";
+            $report['description'] = "Acertar vitória do time mandante";
         } else if($bet->team_home_scoreboard < $bet->team_guest_scoreboard && $official->team_home_scoreboard < $official->team_guest_scoreboard){
             $score = $score + 1;
             $report['score'] = 1;
-            $report['message'] = "Acertar vitória do time visitante";
+            $report['description'] = "Acertar vitória do time visitante";
         } else if($bet->team_home_scoreboard == $bet->team_guest_scoreboard && $official->team_home_scoreboard == $official->team_guest_scoreboard){
             $score = $score + 1;
             $report['score'] = 1;
-            $report['message'] = 'Acertar empate';
+            $report['description'] = 'Acertar empate';
         }
 
         return [
