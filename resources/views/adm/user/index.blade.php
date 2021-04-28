@@ -16,18 +16,14 @@
                             <tr class="mdc-data-table__header-row">
                                 <th class="mdl-data-table__cell--non-numeric">Nome</th>
                                 <th class="mdl-data-table__cell--non-numeric">Email</th>
-                                <th class="mdl-data-table__cell--non-numeric">Tipo</th>
                                 <th class="mdl-data-table__cell--non-numeric"></th>
                             </tr>
                         </thead>
                         <tbody class="mdc-data-table__content">
                             @foreach ($users as $user)
                             <tr class="mdc-data-table__row">
-                                <td class="mdl-data-table__cell--non-numeric" style="width: 30%">{{ $user->name }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" style="width: 30%">{{ $user->email }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" style="width: 30%">
-                                    {{ Str::ucfirst($user->type) }}
-                                </td>
+                                <td class="mdl-data-table__cell--non-numeric" style="width: 45%">{{ $user->name }}</td>
+                                <td class="mdl-data-table__cell--non-numeric" style="width: 45%">{{ $user->email }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 10%">
                                     <a
                                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"

@@ -16,7 +16,7 @@
                         Gamblers
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                        <input class="mdl-textfield__input" id="email" name="email" value="breno@email.com"/>
+                        <input class="mdl-textfield__input" id="email" name="email"/>
                         <label class="mdl-textfield__label" for="email">Email</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">

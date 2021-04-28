@@ -43,17 +43,22 @@
                                 <div class="mdl-tabs__panel is-active" id="ata-team_home">
                                    @foreach ($game->teamHome->players()->where('position', 'ATA')->get() as $player)
                                         <li class="mdl-list__item">
+
                                             <span class="mdl-list__item-primary-content">
                                                 <div
-                                                    class="material-icons mdl-badge mdl-badge--overlap"
-                                                    data-badge="0"
-                                                    id="count_goals_{{ $player->id }}"
-                                                >sports_soccer</div>
-                                            </span>
-                                            <span class="mdl-list__item-primary-content">
+                                                class="material-icons mdl-badge mdl-badge--overlap"
+                                                data-badge="0"
+                                                id="count_goals_{{ $player->id }}"
+                                            >sports_soccer</div>
                                                 {{ $player->name }}
                                             </span>
                                             <span class="mdl-list__item-secondary-action">
+                                                <button
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                    onclick="removeGoalTeamHome({{ $player->toJson() }})"
+                                                >
+                                                    <i class="material-icons">remove</i>
+                                                </button>
                                                 <button
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                     onclick="addGoalTeamHome({{ $player->toJson() }})"
@@ -82,6 +87,12 @@
                                             <span class="mdl-list__item-secondary-action">
                                                 <button
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                    onclick="removeGoalTeamHome({{ $player->toJson() }})"
+                                                >
+                                                    <i class="material-icons">remove</i>
+                                                </button>
+                                                <button
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                     onclick="addGoalTeamHome({{ $player->toJson() }})"
                                                 >
                                                     <i class="material-icons">add</i>
@@ -105,6 +116,12 @@
                                             {{ $player->name }}
                                         </span>
                                         <span class="mdl-list__item-secondary-action">
+                                            <button
+                                                class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                onclick="removeGoalTeamHome({{ $player->toJson() }})"
+                                            >
+                                                <i class="material-icons">remove</i>
+                                            </button>
                                             <button
                                                 class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                 onclick="addGoalTeamHome({{ $player->toJson() }})"
@@ -132,6 +149,12 @@
                                             <span class="mdl-list__item-secondary-action">
                                                 <button
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                    onclick="removeGoalTeamHome({{ $player->toJson() }})"
+                                                >
+                                                    <i class="material-icons">remove</i>
+                                                </button>
+                                                <button
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                     onclick="addGoalTeamHome({{ $player->toJson() }})"
                                                 >
                                                     <i class="material-icons">add</i>
@@ -157,6 +180,12 @@
                                             <span class="mdl-list__item-secondary-action">
                                                 <button
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                    onclick="removeGoalTeamHome({{ $player->toJson() }})"
+                                                >
+                                                    <i class="material-icons">remove</i>
+                                                </button>
+                                                <button
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                     onclick="addGoalTeamHome({{ $player->toJson() }})"
                                                 >
                                                     <i class="material-icons">add</i>
@@ -180,6 +209,12 @@
                                                 {{ $player->name }}
                                             </span>
                                             <span class="mdl-list__item-secondary-action">
+                                                <button
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                    onclick="removeGoalTeamHome({{ $player->toJson() }})"
+                                                >
+                                                    <i class="material-icons">remove</i>
+                                                </button>
                                                 <button
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                     onclick="addGoalTeamHome({{ $player->toJson() }})"
@@ -247,6 +282,12 @@
                                                 <span class="mdl-list__item-secondary-action">
                                                     <button
                                                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                        onclick="removeGoalTeamGuest({{ $player->toJson() }})"
+                                                    >
+                                                        <i class="material-icons">remove</i>
+                                                    </button>
+                                                    <button
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                         onclick="addGoalTeamGuest({{ $player->toJson() }})"
                                                     >
                                                         <i class="material-icons">add</i>
@@ -271,6 +312,12 @@
                                                     {{ $player->name }}
                                                 </span>
                                                 <span class="mdl-list__item-secondary-action">
+                                                    <button
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                        onclick="removeGoalTeamGuest({{ $player->toJson() }})"
+                                                    >
+                                                        <i class="material-icons">remove</i>
+                                                    </button>
                                                     <button
                                                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                         onclick="addGoalTeamGuest({{ $player->toJson() }})"
@@ -298,6 +345,12 @@
                                             <span class="mdl-list__item-secondary-action">
                                                 <button
                                                     class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                    onclick="removeGoalTeamGuest({{ $player->toJson() }})"
+                                                >
+                                                    <i class="material-icons">remove</i>
+                                                </button>
+                                                <button
+                                                    class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                     onclick="addGoalTeamGuest({{ $player->toJson() }})"
                                                 >
                                                     <i class="material-icons">add</i>
@@ -321,6 +374,12 @@
                                                     {{ $player->name }}
                                                 </span>
                                                 <span class="mdl-list__item-secondary-action">
+                                                    <button
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                        onclick="removeGoalTeamGuest({{ $player->toJson() }})"
+                                                    >
+                                                        <i class="material-icons">remove</i>
+                                                    </button>
                                                     <button
                                                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                         onclick="addGoalTeamGuest({{ $player->toJson() }})"
@@ -348,6 +407,12 @@
                                                 <span class="mdl-list__item-secondary-action">
                                                     <button
                                                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                        onclick="removeGoalTeamGuest({{ $player->toJson() }})"
+                                                    >
+                                                        <i class="material-icons">remove</i>
+                                                    </button>
+                                                    <button
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                         onclick="addGoalTeamGuest({{ $player->toJson() }})"
                                                     >
                                                         <i class="material-icons">add</i>
@@ -371,6 +436,12 @@
                                                     {{ $player->name }}
                                                 </span>
                                                 <span class="mdl-list__item-secondary-action">
+                                                    <button
+                                                        class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
+                                                        onclick="removeGoalTeamGuest({{ $player->toJson() }})"
+                                                    >
+                                                        <i class="material-icons">remove</i>
+                                                    </button>
                                                     <button
                                                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary mdl-button--raised"
                                                         onclick="addGoalTeamGuest({{ $player->toJson() }})"
@@ -431,6 +502,31 @@
                 document.querySelector('#score_team_home').innerHTML = goalsTeamHome.length;
             }
 
+            function removeGoalTeamHome(player){
+                if(goalsTeamHome.length === 0){
+                    return;
+                }
+
+                let continueWhile = true;
+                let countWhile = 0;
+                while(continueWhile && countWhile < goalsTeamHome.length){
+                    if(goalsTeamHome[countWhile].id === player.id){
+                        continueWhile = false;
+                        delete goalsTeamHome[countWhile];
+                        goalsTeamHome = goalsTeamHome.filter((item) =>{
+                            return item && typeof item !== 'undefined';
+                        });
+                    }
+                    countWhile++;
+                }
+
+                let count = document.querySelector(`#count_goals_${player.id}`);
+                if(parseInt(count.getAttribute('data-badge')) > 0){
+                    count.setAttribute('data-badge', parseInt(count.getAttribute('data-badge')) - 1)
+                }
+                document.querySelector('#score_team_home').innerHTML = goalsTeamHome.length;
+            }
+
             var goalsTeamGuest = [];
 
             function addGoalTeamGuest(player){
@@ -438,6 +534,32 @@
 
                 let count = document.querySelector(`#count_goals_${player.id}`);
                 count.setAttribute('data-badge', parseInt(count.getAttribute('data-badge')) + 1)
+
+                document.querySelector('#score_team_guest').innerHTML = goalsTeamGuest.length;
+            }
+
+            function removeGoalTeamGuest(player){
+                if(goalsTeamGuest.length === 0){
+                    return;
+                }
+
+                let continueWhile = true;
+                let countWhile = 0;
+                while(continueWhile  && countWhile < goalsTeamGuest.length){
+                    if(goalsTeamGuest[countWhile].id === player.id){
+                        continueWhile = false;
+                        delete goalsTeamGuest[countWhile];
+                        goalsTeamGuest = goalsTeamGuest.filter((item) =>{
+                            return item && typeof item !== 'undefined';
+                        });
+                    }
+                    countWhile++;
+                }
+
+                let count = document.querySelector(`#count_goals_${player.id}`);
+                if(parseInt(count.getAttribute('data-badge')) > 0){
+                    count.setAttribute('data-badge', parseInt(count.getAttribute('data-badge')) - 1)
+                }
 
                 document.querySelector('#score_team_guest').innerHTML = goalsTeamGuest.length;
             }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Adm\PlayerRequest;
+use App\Models\Competition;
 use App\Models\Country;
 use App\Models\Player;
 use App\Models\Scoreboard;
@@ -22,28 +23,56 @@ class UserController extends Controller
 
     public function info(User $user)
     {
-        $userScoreBoards = DB::select("
-            select
-                user.name           as user_name,
-                competition.name    as competition_name,
-                competition.season  as competition_season,
-                sum(score.score)    as total_score
-            from gamblers_api.scoreboards score
-            join gamblers_api.games game
-                on score.game_id = game.id
-            join gamblers_api.users user
-                on user.id = score.user_id
-            join gamblers_api.competitions competition
-                on game.competition_id = competition.id
-            where score.type = 'bet'
-                and user.id = {$user->id}
-                and game.status = 'finished'
-            group by user.id, user.name, competition.id, competition.name, competition.season
-        ");
+        $scores = DB::table('scoreboards')
+                    ->selectRaw(
+                        'users.name             as user_name,
+                        competitions.name       as competition_name,
+                        competitions.id         as competition_id,
+                        competitions.season     as competition_season,
+                        sum(scoreboards.score)  as total_score'
+                    )
+                    ->join('games', 'games.id', '=', 'scoreboards.game_id')
+                    ->join('users', 'users.id', '=', 'scoreboards.user_id')
+                    ->join('competitions', 'competitions.id', '=', 'games.competition_id')
+                    ->where('scoreboards.type', 'bet')
+                    ->where('games.status', 'finished')
+                    ->where('competitions.active', true)
+                    ->where('users.id', $user->id)
+                    ->groupByRaw('users.id, users.name, competitions.id, competitions.name, competitions.season')
+                    ->paginate(10);
 
         return view('adm.user.info', [
             'user' => $user,
-            'userScoreBoards' => $userScoreBoards
+            'scores' => $scores
+        ]);
+    }
+
+    public function report(User $user, Competition $competition)
+    {
+        $scores = DB::table('scoreboards')
+                    ->selectRaw(
+                        'users.name             as user_name,
+                        competitions.name       as competition_name,
+                        competitions.season     as competition_season,
+                        scoreboards.report      as report,
+                        scoreboards.score       as score,
+                        date_format(games.date, "%d/%m/%Y")  as date,
+                        (select name from teams where teams.id = games.team_home_id)  as team_home_name,
+                        (select name from teams where teams.id = games.team_guest_id) as team_guest_name'
+                    )
+                    ->join('games', 'games.id', '=', 'scoreboards.game_id')
+                    ->join('users', 'users.id', '=', 'scoreboards.user_id')
+                    ->join('competitions', 'competitions.id', '=', 'games.competition_id')
+                    ->where('scoreboards.type', 'bet')
+                    ->where('games.status', 'finished')
+                    ->where('users.id', $user->id)
+                    ->where('competitions.id', $competition->id)
+                    ->get();
+
+        return view('adm.user.report', [
+            'user' => $user,
+            'scores' => $scores,
+            'competition' => $competition
         ]);
     }
 }

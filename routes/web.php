@@ -56,6 +56,7 @@ Route::prefix('adm')->name('adm.')->middleware('auth')->group(function (){
 
     Route::get('/users', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/{user}', [UserController::class, 'info'])->name('user.info');
+    Route::get('/user/report/{user}/{competition}', [UserController::class, 'report'])->name('user.report');
 
     Route::get('/ranking', [RankingController::class, 'index'])->name('ranking.index');
     Route::get('/ranking/{competition}', [RankingController::class, 'competition'])->name('ranking.competition');

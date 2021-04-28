@@ -62,11 +62,14 @@ class ScoreService
 
             $calc = $this->calculateScoreByScoreboard($bet, $official);
             $score += $calc['score'];
-            $report['scoreboard'] = $calc['report'];
+            $report[] = $calc['report'];
 
             $calc = $this->calculateScoreByGoals($bet->goals->toArray(), $official->goals->toArray());
             $score += $calc['score'];
-            $report['goals'] = $calc['report'];
+            // $report[] = $calc['report'];
+            foreach ($calc['report'] as $value) {
+                $report[] = $value;
+            }
 
             $bet->update([
                 'score' => $score,

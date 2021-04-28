@@ -25,8 +25,15 @@ class DatabaseSeeder extends Seeder
     {
         User::create([
             'name' => 'Breno',
-            'email' => 'breno@email.com',
-            'password' => Hash::make('aaaaaaaa'),
+            'email' => 'brenohenrique098@gmail.com',
+            'password' => Hash::make('token@123'),
+            'type' => 'adm'
+        ]);
+
+        User::create([
+            'name' => 'Rai',
+            'email' => 'rai.luis1999@gmail.com',
+            'password' => Hash::make('token@123'),
             'type' => 'adm'
         ]);
 
@@ -50,7 +57,9 @@ class DatabaseSeeder extends Seeder
             ['id' => 5, 'name' => 'Portugal'],
             ['id' => 6, 'name' => 'Espanha'],
             ['id' => 7, 'name' => 'Itália'],
-            ['id' => 8, 'name' => 'Croácia']
+            ['id' => 8, 'name' => 'Croácia'],
+            ['id' => 9, 'name' => 'Argentina'],
+            ['id' => 10, 'name' => 'Bélgica']
         ];
 
         foreach ($coutries as $key => $value) {
@@ -92,9 +101,42 @@ class DatabaseSeeder extends Seeder
     public function createTeams()
     {
         $teams = [
-            ['id' => 1, 'name' => 'Real Madrid', 'country_id' => 6, 'name_photo' => '20210427125605real'],
-            ['id' => 2, 'name' => 'Juventus', 'country_id' => 7, 'name_photo' => '20210427013854juventus.png'],
-            ['id' => 3, 'name' => 'PSG', 'country_id' => 2, 'name_photo' => '20210427013952psg.png'],
+            [
+                'id' => 1,
+                'name' => 'Real Madrid',
+                'country_id' => ( Country::where('name', 'Espanha')->first() )->id,
+                'name_photo' => '20210427125605real'
+            ],
+            [
+                'id' => 2,
+                'name' => 'Juventus',
+                'country_id' => ( Country::where('name', 'Itália')->first() )->id,
+                'name_photo' => '20210427013854juventus.png'
+            ],
+            [
+                'id' => 3,
+                'name' => 'PSG',
+                'country_id' => ( Country::where('name', 'França')->first() )->id,
+                'name_photo' => '20210427013952psg.png'
+            ],
+            [
+                'id' => 4,
+                'name' => 'Barcelona',
+                'country_id' => ( Country::where('name', 'Espanha')->first() )->id,
+                'name_photo' => '20210428005203barc.png'
+            ],
+            [
+                'id' => 5,
+                'name' => 'Bayer Munchen',
+                'country_id' => ( Country::where('name', 'Alemanha')->first() )->id,
+                'name_photo' => '20210428005346bayer'
+            ],
+            [
+                'id' => 6,
+                'name' => 'Manchester City',
+                'country_id' => ( Country::where('name', 'Inglaterra')->first() )->id,
+                'name_photo' => '20210428005426man_city.jpg'
+            ],
         ];
 
         foreach ($teams as $key => $value) {
@@ -109,43 +151,85 @@ class DatabaseSeeder extends Seeder
             [
                 'id' => 1,
                 'name' => 'Cristiano Ronaldo',
-                'country_id' => 5,
-                'team_id' => 2,
+                'country_id' => ( Country::where('name', 'Portugal')->first() )->id,
+                'team_id' => ( Team::where('name', 'Juventus')->first() )->id,
                 'position' => 'ATA'
             ],
             [
                 'id' => 2,
                 'name' => 'Neymar',
-                'country_id' => 1,
-                'team_id' => 3,
+                'country_id' => ( Country::where('name', 'Brasil')->first() )->id,
+                'team_id' => ( Team::where('name', 'PSG')->first() )->id,
                 'position' => 'ATA'
             ],
             [
                 'id' => 3,
                 'name' => 'Kroos',
-                'country_id' => 3,
-                'team_id' => 1,
+                'country_id' => ( Country::where('name', 'Alemanha')->first() )->id,
+                'team_id' => ( Team::where('name', 'Real Madrid')->first() )->id,
                 'position' => 'VOL'
             ],
             [
                 'id' => 4,
                 'name' => 'Sergio Ramos',
-                'country_id' => 6,
-                'team_id' => 1,
+                'country_id' => ( Country::where('name', 'Espanha')->first() )->id,
+                'team_id' => ( Team::where('name', 'Real Madrid')->first() )->id,
                 'position' => 'ZAG'
             ],
             [
                 'id' => 5,
                 'name' => 'Modric',
-                'country_id' => 8,
-                'team_id' => 1,
+                'country_id' => ( Country::where('name', 'Croácia')->first() )->id,
+                'team_id' => ( Team::where('name', 'Real Madrid')->first() )->id,
                 'position' => 'MEI'
             ],
             [
                 'id' => 6,
                 'name' => 'Benzema',
-                'country_id' => 2,
-                'team_id' => 1,
+                'country_id' => ( Country::where('name', 'França')->first() )->id,
+                'team_id' => ( Team::where('name', 'Real Madrid')->first() )->id,
+                'position' => 'ATA'
+            ],
+            [
+                'id' => 7,
+                'name' => 'Messi',
+                'country_id' => ( Country::where('name', 'Argentina')->first() )->id,
+                'team_id' => ( Team::where('name', 'Barcelona')->first() )->id,
+                'position' => 'ATA'
+            ],
+            [
+                'id' => 8,
+                'name' => 'De Bruyne',
+                'country_id' => ( Country::where('name', 'Bélgica')->first() )->id,
+                'team_id' => ( Team::where('name', 'Manchester City')->first() )->id,
+                'position' => 'MEI'
+            ],
+            [
+                'id' => 9,
+                'name' => 'Dybala',
+                'country_id' => ( Country::where('name', 'Argentina')->first() )->id,
+                'team_id' => ( Team::where('name', 'Juventus')->first() )->id,
+                'position' => 'ATA'
+            ],
+            [
+                'id' => 10,
+                'name' => 'Chiellini',
+                'country_id' => ( Country::where('name', 'Itália')->first() )->id,
+                'team_id' => ( Team::where('name', 'Juventus')->first() )->id,
+                'position' => 'ZAG'
+            ],
+            [
+                'id' => 11,
+                'name' => 'Morata',
+                'country_id' => ( Country::where('name', 'Espanha')->first() )->id,
+                'team_id' => ( Team::where('name', 'Juventus')->first() )->id,
+                'position' => 'ATA'
+            ],
+            [
+                'id' => 12,
+                'name' => 'Dembélé',
+                'country_id' => ( Country::where('name', 'França')->first() )->id,
+                'team_id' => ( Team::where('name', 'Barcelona')->first() )->id,
                 'position' => 'ATA'
             ],
         ];
@@ -158,8 +242,16 @@ class DatabaseSeeder extends Seeder
     public function createStadia()
     {
         $stadia = [
-            ['id' => 1, 'name' => 'Santiago Bernabeu', 'country_id' => 6],
-            ['id' => 2, 'name' => 'San Siro', 'country_id' => 7],
+            [
+                'id' => 1,
+                'name' => 'Santiago Bernabeu',
+                'country_id' => ( Country::where('name', 'Espanha')->first() )->id,
+            ],
+            [
+                'id' => 2,
+                'name' => 'San Siro',
+                'country_id' => ( Country::where('name', 'Itália')->first() )->id,
+            ],
         ];
 
         foreach ($stadia as $key => $value) {
