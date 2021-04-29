@@ -52,4 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(Game::class);
     }
 
+    public function competitions()
+    {
+        return $this->belongsToMany(Competition::class, 'user_competition', 'user_id', 'competition_id');
+    }
+
+
 }

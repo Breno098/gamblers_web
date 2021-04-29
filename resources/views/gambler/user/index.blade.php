@@ -3,28 +3,8 @@
 @section('content')
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--12-col demo-card-wide mdl-card">
-            {{-- <div class="mdl-card__title">
-                <h1 class="mdl-card__title-text" style="display: flex; align-items: center; justify-content: center">
-                    <span class="material-icons">
-                        account_circle
-                    </span>
-                    &nbsp; <strong> {{ $user->name }} </strong>
-                </h1>
-            </div> --}}
-
             <div class="mdl-card__supporting-text">
-
-                <div style="
-                        background: rgba(0, 0 , 0, 0.05);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        border-radius: 50%;
-                        margin: 25px auto 0;
-                        padding: 15px;
-                        width: 250px;
-                        height: 250px;
-                    ">
+                <div style="background: rgba(0, 0 , 0, 0.05); display: flex; align-items: center; justify-content: center; border-radius: 50%; margin: 25px auto 0; padding: 15px; width: 250px; height: 250px;">
                         <img
                             src="{{ asset('storage/avatar/' . $user->avatar ) }}"
                             alt="avatar"
@@ -32,16 +12,7 @@
                         />
                 </div>
 
-                <div style="
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0 auto;
-                        padding: 15px;
-                        width: 250px;
-                        flex-direction: column
-                    "
-                >
+                <div style="display: flex; align-items: center; justify-content: center; margin: 0 auto; padding: 15px; width: 250px; flex-direction: column">
                     <a
                         class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--primary"
                         style="height: 40px;"

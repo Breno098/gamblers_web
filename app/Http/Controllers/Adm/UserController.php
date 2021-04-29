@@ -3,13 +3,9 @@
 namespace App\Http\Controllers\Adm;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Adm\PlayerRequest;
 use App\Models\Competition;
-use App\Models\Country;
-use App\Models\Player;
-use App\Models\Scoreboard;
-use App\Models\Team;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
@@ -43,8 +39,31 @@ class UserController extends Controller
 
         return view('adm.user.info', [
             'user' => $user,
-            'scores' => $scores
+            'scores' => $scores,
+            'competitions' => Competition::where('active', 1)->orderBy('name')->get()
         ]);
+    }
+
+    public function updateCompetition(Request $request)
+    {
+        $result = DB::table('user_competition')
+            ->where('user_id', $request->userId)
+            ->where('competition_id', $request->competitionId)
+            ->first();
+
+        if($result){
+            DB::table('user_competition')
+                ->where('user_id', $request->userId)
+                ->where('competition_id', $request->competitionId)
+                ->delete();
+        } else {
+            DB::table('user_competition')->insert([
+                'user_id' => $request->userId,
+                'competition_id' => $request->competitionId
+            ]);
+        }
+
+        return response()->json(['status' => 'success']);
     }
 
     public function report(User $user, Competition $competition)

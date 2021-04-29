@@ -62,6 +62,7 @@ Route::prefix('adm')->name('adm.')->middleware(['auth', 'adm'])->group(function 
     Route::get('/users', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/{user}', [UserController::class, 'info'])->name('user.info');
     Route::get('/user/report/{user}/{competition}', [UserController::class, 'report'])->name('user.report');
+    Route::post('/user/update_competition', [UserController::class, 'updateCompetition'])->name('user.update_competition');
 
     Route::get('/ranking', [RankingController::class, 'index'])->name('ranking.index');
     Route::get('/ranking/{competition}', [RankingController::class, 'competition'])->name('ranking.competition');

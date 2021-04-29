@@ -191,6 +191,13 @@
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('dashboard') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">casino</i>
+                        Apostar
+                    </a>
+
+                    <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
+
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('logout') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">logout</i>
                         Sair

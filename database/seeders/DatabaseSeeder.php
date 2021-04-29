@@ -12,6 +12,7 @@ use App\Models\Stadium;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -26,7 +27,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Breno',
             'email' => 'brenohenrique098@gmail.com',
-            'password' => Hash::make('token@123'),
+            'password' => Hash::make('aaaa'),
             'type' => 'adm',
             'avatar' => 'cristiano-ronaldo.png'
         ]);
@@ -47,6 +48,11 @@ class DatabaseSeeder extends Seeder
         $this->createGames();
         $this->createScoreboards();
         $this->createGoals();
+
+        DB::table('user_competition')->insert([
+            'user_id' => 1,
+            'competition_id' => 1
+        ]);
     }
 
     public function createCountries()
