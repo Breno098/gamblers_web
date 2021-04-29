@@ -26,7 +26,7 @@
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                            <input type="time" class="mdl-textfield__input" name="time" id="time" value="{{ isset($game) ? $game->time->format('H:m') : '17:00' }}" required/>
+                            <input type="time" class="mdl-textfield__input" name="time" id="time" value="{{ isset($game) ? $game->date->format('H:m') : '17:00' }}" required/>
                             <label class="mdl-textfield__label" for="time">Hora</label>
                         </div>
 

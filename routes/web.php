@@ -10,31 +10,36 @@ use App\Http\Controllers\Adm\RankingController;
 use App\Http\Controllers\Adm\StadiumController;
 use App\Http\Controllers\Adm\TeamController;
 use App\Http\Controllers\Adm\UserController;
+
+use App\Http\Controllers\Gambler\DashboardController as GamblerDashboardController;
+use App\Http\Controllers\Gambler\OfficialController as GamblerOfficialController;
+
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Gambler\RankingController as GamblerRankingController;
+use App\Http\Controllers\Gambler\UserController as GamblerUserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+Route::middleware('auth')->group(function (){
 
-Route::get('/', [LoginController::class, 'showForm']);
-Route::get('/login', [LoginController::class, 'showForm']);
-Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::get('/dashboard', [GamblerDashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/register', [LoginController::class, 'showFormRegister']);
-Route::post('/register', [LoginController::class, 'register'])->name('register');
+    Route::get('/official/competitions', [GamblerOfficialController::class, 'competitions'])->name('official.competitions');
+    Route::get('/official/competition_games/{competition}', [GamblerOfficialController::class, 'competitionGames'])->name('official.competitionGames');
+    Route::get('/official/game/{game}', [GamblerOfficialController::class, 'game'])->name('official.game');
+    Route::post('/official/store_bet', [GamblerOfficialController::class, 'storeBet'])->name('official.store_bet');
 
-Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::get('/ranking', [GamblerRankingController::class, 'index'])->name('ranking.index');
+    Route::get('/ranking/{competition}', [GamblerRankingController::class, 'competition'])->name('ranking.competition');
 
-Route::prefix('adm')->name('adm.')->middleware('auth')->group(function (){
+    Route::get('/user', [GamblerUserController::class, 'index'])->name('user.index');
+    Route::get('/user/report/{competition}', [GamblerUserController::class, 'report'])->name('user.report');
+    Route::get('/user/avatar', [GamblerUserController::class, 'avatar'])->name('user.avatar');
+    Route::get('/user/update_avatar/{avatar}', [GamblerUserController::class, 'updateAvatar'])->name('user.update_avatar');
+
+});
+
+Route::prefix('adm')->name('adm.')->middleware(['auth', 'adm'])->group(function (){
 
     Route::get('/error/{error}', function($error) {
         return view('adm.errors', [ 'error' => $error ]);
@@ -62,3 +67,12 @@ Route::prefix('adm')->name('adm.')->middleware('auth')->group(function (){
     Route::get('/ranking/{competition}', [RankingController::class, 'competition'])->name('ranking.competition');
 
 });
+
+Route::get('/', [LoginController::class, 'showForm']);
+Route::get('/login', [LoginController::class, 'showForm']);
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+Route::get('/register', [LoginController::class, 'showFormRegister']);
+Route::post('/register', [LoginController::class, 'register'])->name('register');
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

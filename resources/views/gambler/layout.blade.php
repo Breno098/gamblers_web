@@ -96,97 +96,74 @@
                 }
             }
 
+            .avatar:hover {
+                background-color: rgba(0, 0, 0, 0.08)
+            }
         </style>
     </head>
     <body>
         <div class="demo-layout-waterfall mdl-layout mdl-js-layout ">
             <header class="mdl-layout__header mdl-layout__header--waterfall">
                 <div class="mdl-layout__header-row mdl-color--primary">
-                    <span class="mdl-layout-title">Gamblers Adm</span>
+                    <span class="mdl-layout-title">Gamblers</span>
 
                     <div class="mdl-layout-spacer"></div>
-
-                    {{-- <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                                mdl-textfield--floating-label mdl-textfield--align-right">
-                        <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
-                            <i class="material-icons">search</i>
-                        </label>
-                        <div class="mdl-textfield__expandable-holder">
-                            <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
-                        </div>
-                    </div> --}}
                 </div>
-
-                {{-- <div class="mdl-layout__header-row">
-                    <div class="mdl-layout-spacer"></div>
-                    <!-- Navigation -->
-                    <nav class="mdl-navigation">
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                    </nav>
-                </div> --}}
             </header>
 
             <div class="mdl-layout__drawer">
-                <span class="mdl-layout-title">Gamblers Adm</span>
+
+                <strong style="text-align: center; margin-top: 10px">{{ Auth::user()->name }}</strong>
+
+                <div style="
+                    background: rgba(0, 0 , 0, 0.05);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 50%;
+                    margin: 5px;
+                    padding: 15px
+                ">
+                    <img
+                        src="{{ asset('storage/avatar/' . Auth::user()->avatar ) }}"
+                        alt="avatar"
+                        style="height: 200px; width: 150px;"
+                    />
+                </div>
+
                 <nav class="mdl-navigation">
+
+                    @if (Auth::user()->type === 'adm')
+                        <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
+
+                        <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.dashboard') }}">
+                            <i class="mdl-color-text--black material-icons" role="presentation">work</i>
+                            Administrativo
+                        </a>
+                    @endif
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.dashboard') }}">
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('dashboard') }}">
                         <i class="mdl-color-text--black material-icons" role="presentation">home</i>
                         DashBoard
                     </a>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.official.competitions') }}">
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('official.competitions') }}">
                         <i class="mdl-color-text--black material-icons" role="presentation">sports_soccer</i>
-                        Jogos Oficiais
+                        Jogos
                     </a>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.ranking.index') }}" >
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('ranking.index') }}">
                         <i class="mdl-color-text--black material-icons" role="presentation">leaderboard</i>
                         Ranking
                     </a>
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">public</i>
-                        País
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.team.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">groups</i>
-                        Time
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.player.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">person</i>
-                        Jogador
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.stadium.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">home</i>
-                        Estádio
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.competition.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">emoji_events</i>
-                        Competição
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.game.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">sports</i>
-                        Jogo
-                    </a>
-
-                    <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.user.index') }}" >
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('user.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">group</i>
-                        Usuários
+                        Perfil
                     </a>
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>

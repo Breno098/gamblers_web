@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('gambler.layout')
 
 @section('content')
     <div class="mdl-grid" style="display: flex; justify-content: center">
@@ -48,11 +48,13 @@
                         <hr style="width: 90%; margin: 0 auto" class="mdl-color--accent"/>
                         <div class="mdl-card__title" >
                             <a
-                                href="{{ route('adm.official.game', ['game' => $game]) }}"
+                                href="{{ route('official.game', ['game' => $game]) }}"
                                 style="width: 100%; height: 40px; min-width: initial;"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white"
                             >
-                                <strong> Adicionar resultado </strong>
+                                <strong>
+                                    {{ $game->scoreboard()->where('user_id', Auth::user()->id)->count() ? 'Alterar aposta' : 'Apostar' }}
+                                </strong>
                             </a>
                         </div>
 

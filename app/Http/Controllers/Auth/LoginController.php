@@ -32,10 +32,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            if(Auth::user()->type === 'adm'){
-                return redirect()->route('adm.dashboard');
-            }
+            return redirect()->route('dashboard');
         }
 
         return redirect('/')->with('error_login', 'Usuário ou senha incorretos.');
@@ -55,7 +52,7 @@ class LoginController extends Controller
             return redirect('/register')->with('error_register', 'Erro ao se registrar, tente novamente.');
         };
 
-        return redirect()->route('adm.dashboard');
+        return redirect()->route('dashboard');
 
     }
 

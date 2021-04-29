@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('gambler.layout')
 
 @section('content')
     <div class="mdl-grid" style="width: 100%">
@@ -46,7 +46,7 @@
                                 <div class="mdl-tabs__panel is-active" id="ata-team_home">
                                    @foreach ($game->teamHome->players()->where('position', 'ATA')->get() as $player)
                                     @php
-                                        $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                        $players = $game->getGoalsInTheGameAttribute($player->id);
                                         if($players){
                                             if($players){
                                                 foreach ($players as $player) {
@@ -88,7 +88,7 @@
                                 <div class="mdl-tabs__panel" id="mei-team_home">
                                     @foreach ($game->teamHome->players()->where('position', 'MEI')->get() as $player)
                                         @php
-                                            $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                            $players = $game->getGoalsInTheGameAttribute($player->id);
                                             if($players){
                                                 foreach ($players as $player) {
                                                     $goalsHome[] = $player;
@@ -127,7 +127,7 @@
                                 <div class="mdl-tabs__panel" id="vol-team_home">
                                     @foreach ($game->teamHome->players()->where('position', 'VOL')->get() as $player)
                                         @php
-                                            $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                            $players = $game->getGoalsInTheGameAttribute($player->id);
                                             if($players){
                                                 foreach ($players as $player) {
                                                     $goalsHome[] = $player;
@@ -166,7 +166,7 @@
                                 <div class="mdl-tabs__panel" id="lt-team_home">
                                     @foreach ($game->teamHome->players()->where('position', 'LT')->get() as $player)
                                         @php
-                                            $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                            $players = $game->getGoalsInTheGameAttribute($player->id);
                                             if($players){
                                                 foreach ($players as $player) {
                                                     $goalsHome[] = $player;
@@ -205,7 +205,7 @@
                                 <div class="mdl-tabs__panel" id="zag-team_home">
                                     @foreach ($game->teamHome->players()->where('position', 'ZAG')->get() as $player)
                                         @php
-                                            $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                            $players = $game->getGoalsInTheGameAttribute($player->id);
                                             if($players){
                                                 foreach ($players as $player) {
                                                     $goalsHome[] = $player;
@@ -244,7 +244,7 @@
                                 <div class="mdl-tabs__panel" id="go-team_home">
                                     @foreach ($game->teamHome->players()->where('position', 'GO')->get() as $player)
                                         @php
-                                            $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                            $players = $game->getGoalsInTheGameAttribute($player->id);
                                             if($players){
                                                 foreach ($players as $player) {
                                                     $goalsHome[] = $player;
@@ -326,7 +326,7 @@
                                     <div class="mdl-tabs__panel is-active" id="ata-team_home">
                                        @foreach ($game->teamGuest->players()->where('position', 'ATA')->get() as $player)
                                             @php
-                                                $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                                $players = $game->getGoalsInTheGameAttribute($player->id);
                                                 if($players){
                                                     foreach ($players as $player) {
                                                         $goalsGuest[] = $player;
@@ -365,7 +365,7 @@
                                     <div class="mdl-tabs__panel" id="mei-team_home">
                                         @foreach ($game->teamGuest->players()->where('position', 'MEI')->get() as $player)
                                             @php
-                                                $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                                $players = $game->getGoalsInTheGameAttribute($player->id);
                                                 if($players){
                                                     foreach ($players as $player) {
                                                         $goalsGuest[] = $player;
@@ -404,7 +404,7 @@
                                     <div class="mdl-tabs__panel" id="vol-team_home">
                                         @foreach ($game->teamGuest->players()->where('position', 'VOL')->get() as $player)
                                             @php
-                                                $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                                $players = $game->getGoalsInTheGameAttribute($player->id);
                                                 if($players){
                                                     foreach ($players as $player) {
                                                         $goalsGuest[] = $player;
@@ -443,7 +443,7 @@
                                     <div class="mdl-tabs__panel" id="lt-team_home">
                                         @foreach ($game->teamGuest->players()->where('position', 'LT')->get() as $player)
                                             @php
-                                                $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                                $players = $game->getGoalsInTheGameAttribute($player->id);
                                                 if($players){
                                                     foreach ($players as $player) {
                                                         $goalsGuest[] = $player;
@@ -482,7 +482,7 @@
                                     <div class="mdl-tabs__panel" id="zag-team_home">
                                         @foreach ($game->teamGuest->players()->where('position', 'ZAG')->get() as $player)
                                             @php
-                                                $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                                $players = $game->getGoalsInTheGameAttribute($player->id);
                                                 if($players){
                                                     foreach ($players as $player) {
                                                         $goalsGuest[] = $player;
@@ -521,7 +521,7 @@
                                     <div class="mdl-tabs__panel" id="go-team_home">
                                         @foreach ($game->teamGuest->players()->where('position', 'GO')->get() as $player)
                                             @php
-                                                $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
+                                                $players = $game->getGoalsInTheGameAttribute($player->id);
                                                 if($players){
                                                     foreach ($players as $player) {
                                                         $goalsGuest[] = $player;
@@ -691,7 +691,7 @@
 
             var btnSubmit = document.querySelector('#btnSubmit');
             btnSubmit.onclick = () => {
-                fetch( "{{ route('adm.official.calculate_score') }}", {
+                fetch( "{{ route('official.store_bet') }}", {
                     method: "POST",
                     headers: { "Content-Type": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
                     body: JSON.stringify({
@@ -702,9 +702,11 @@
                 })
                 .then( data => data.json())
                 .then((response) => {
-                    console.log(response);
+                    if(response.status === 'expired time'){
+                       alert('Aposta com tempo expirado');
+                    }
                     if(response.status === 'success'){
-                        window.location.replace(" {{ route('adm.official.competitionGames', ['competition' => $game->competition ]) }} ");
+                        window.location.replace(" {{ route('official.competitionGames', ['competition' => $game->competition ]) }} ");
                     }
                 });
             }

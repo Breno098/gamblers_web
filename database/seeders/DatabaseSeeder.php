@@ -27,14 +27,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Breno',
             'email' => 'brenohenrique098@gmail.com',
             'password' => Hash::make('token@123'),
-            'type' => 'adm'
+            'type' => 'adm',
+            'avatar' => 'cristiano-ronaldo.png'
         ]);
 
         User::create([
             'name' => 'Rai',
             'email' => 'rai.luis1999@gmail.com',
             'password' => Hash::make('token@123'),
-            'type' => 'adm'
+            'type' => 'adm',
+            'avatar' => 'messi.png'
         ]);
 
         $this->createCountries();
@@ -142,6 +144,12 @@ class DatabaseSeeder extends Seeder
         foreach ($teams as $key => $value) {
             $teamCreated = Team::create($value);
             $teamCreated->competitions()->sync([1]);
+
+            Player::create([
+                'name' => 'Gol Contra',
+                'team_id' => $teamCreated->id,
+                'id' => $key + 9999
+            ]);
         }
     }
 

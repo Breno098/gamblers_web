@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Game extends Model
 {
@@ -15,7 +16,7 @@ class Game extends Model
     ];
 
     protected $casts = [
-        'date' => 'datetime:Y-m-d',
+        'date' => 'datetime:Y-m-d H:i',
         'time' => 'datetime:H:i'
     ];
 
@@ -52,5 +53,59 @@ class Game extends Model
     public function getScoreboardOfficialAttribute()
     {
         return $this->scoreboard()->where('game_id', $this->id)->where('type', 'official')->first();
+    }
+
+    public function getScoreboardBetUserAttribute($user_id)
+    {
+        return $this->scoreboard()->where('game_id', $this->id)->where('type', 'bet')->where('user_id', $user_id)->first();
+    }
+
+    public function getScoreboardBetUserAuthAttribute()
+    {
+        return $this->scoreboard()->where('game_id', $this->id)->where('type', 'bet')->where('user_id', Auth::user()->id)->first();
+    }
+
+    public function getGoalsInTheGameAttribute($playerId)
+    {
+        $results = $this->scoreboard()
+            ->where('game_id', $this->id)
+            ->where('type', 'bet')
+            ->where('user_id', Auth::user()->id)
+            ->first();
+
+        if(!isset($results->goals)){
+            return 0;
+        }
+
+        $goals = [];
+        collect($results->goals)->each(function($res) use (&$goals, $playerId){
+            if($res->player_id === $playerId){
+                $goals[] = $res->player;
+            };
+        });
+
+        return $goals;
+    }
+
+    public function getOfficialGoalsInTheGameAttribute($playerId)
+    {
+        $results = $this->scoreboard()
+            ->where('game_id', $this->id)
+            ->where('type', 'official')
+            ->whereNull('user_id')
+            ->first();
+
+        if(!isset($results->goals)){
+            return 0;
+        }
+
+        $goals = [];
+        collect($results->goals)->each(function($res) use (&$goals, $playerId){
+            if($res->player_id === $playerId){
+                $goals[] = $res->player;
+            };
+        });
+
+        return $goals;
     }
 }

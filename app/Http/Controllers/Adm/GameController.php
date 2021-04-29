@@ -32,7 +32,9 @@ class GameController extends Controller
 
     public function store(GameRequest $request)
     {
-        Game::create($request->all());
+        $data = $request->all();
+        $data['date'] = $data['date'] . ' ' . $data['time'];
+        Game::create($data);
 
         return redirect()->route('adm.game.index');
     }
@@ -51,7 +53,10 @@ class GameController extends Controller
 
     public function update(GameRequest $request, Game $game)
     {
-        $game->update($request->all());
+        $data = $request->all();
+        $data['date'] = $data['date'] . ' ' . $data['time'];
+
+        $game->update($data);
 
         return redirect()->route('adm.game.index');
     }

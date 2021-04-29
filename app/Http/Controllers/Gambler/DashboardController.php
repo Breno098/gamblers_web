@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Adm;
+namespace App\Http\Controllers\Gambler;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -24,7 +24,7 @@ class DashboardController extends Controller
             ]
         ];
 
-        return view('adm.dashboard.index', [
+        return view('gambler.dashboard.index', [
             'rules' => $rules,
         ]);
     }

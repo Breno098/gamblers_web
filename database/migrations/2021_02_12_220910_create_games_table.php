@@ -15,7 +15,7 @@ class CreateGamesTable extends Migration
     {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->nullable();
+            $table->dateTime('date')->nullable();
             $table->time('time')->nullable();
             $table->string('status')->nullable();
             $table->string('stage')->nullable();

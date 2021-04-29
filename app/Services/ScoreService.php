@@ -102,7 +102,7 @@ class ScoreService
 
                     $report[] = [
                         'score' => 0.5,
-                        'description' => "Acertar gol marcado de {$player->name}"
+                        'description' => "Gol de {$player->name}"
                     ];
                 }
             }
@@ -121,19 +121,19 @@ class ScoreService
         if($bet->team_home_scoreboard === $official->team_home_scoreboard && $bet->team_guest_scoreboard === $official->team_guest_scoreboard){
             $score = $score + 3;
             $report['score'] = 3;
-            $report['description'] = 'Acertar placar exato';
+            $report['description'] = 'Placar exato';
         } else if($bet->team_home_scoreboard > $bet->team_guest_scoreboard && $official->team_home_scoreboard > $official->team_guest_scoreboard){
             $score = $score + 1;
             $report['score'] = 1;
-            $report['description'] = "Acertar vitória do time mandante";
+            $report['description'] = "Vitória do time mandante";
         } else if($bet->team_home_scoreboard < $bet->team_guest_scoreboard && $official->team_home_scoreboard < $official->team_guest_scoreboard){
             $score = $score + 1;
             $report['score'] = 1;
-            $report['description'] = "Acertar vitória do time visitante";
+            $report['description'] = "Vitória do time visitante";
         } else if($bet->team_home_scoreboard == $bet->team_guest_scoreboard && $official->team_home_scoreboard == $official->team_guest_scoreboard){
             $score = $score + 1;
             $report['score'] = 1;
-            $report['description'] = 'Acertar empate';
+            $report['description'] = 'Empate';
         }
 
         return [
