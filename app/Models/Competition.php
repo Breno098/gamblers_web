@@ -23,4 +23,9 @@ class Competition extends Model
     {
         return $this->belongsToMany(User::class, 'user_competition', 'competition_id', 'user_id');
     }
+
+    public function games()
+    {
+        return $this->hasMany(Game::class);
+    }
 }
