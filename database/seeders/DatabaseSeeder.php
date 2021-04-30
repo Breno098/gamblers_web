@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Breno',
             'email' => 'brenohenrique098@gmail.com',
-            'password' => Hash::make('aaaa'),
+            'password' => Hash::make('token@123'),
             'type' => 'adm',
             'avatar' => 'cristiano-ronaldo.png'
         ]);
@@ -291,7 +291,7 @@ class DatabaseSeeder extends Seeder
                 'id' => 2,
                 'date' => now(),
                 'time' => now(),
-                'status' => 'finished',
+                'status' => 'open',
                 'team_home_id' => 2,
                 'team_guest_id' => 3,
                 'stadium_id' => 2,

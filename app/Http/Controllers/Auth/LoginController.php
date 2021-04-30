@@ -17,7 +17,25 @@ class LoginController extends Controller
 
     public function showFormRegister()
     {
-        return view('auth.register');
+        return view('auth.register', [
+            'avatars' => [
+                'cristiano-ronaldo.png',
+                'messi.png',
+                'neymar.png',
+                'lukaku.png',
+                'sergio-ramos.png',
+                'harry-kane.png',
+                'mo-salah.png',
+                'griezmann.png',
+                'isco.png',
+                'luis-suarez.png',
+                'luka-modric.png',
+                'mbappe.png',
+                'paul-pogba.png',
+                'ramadel-falcao.png',
+                'toni-kroos.png'
+            ]
+        ]);
     }
 
     public function logout()

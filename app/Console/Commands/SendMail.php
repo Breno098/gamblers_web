@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Mail\SendMailGamesToday;
+use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Mail;
 
@@ -39,7 +40,10 @@ class SendMail extends Command
      */
     public function handle()
     {
-        Mail::to('brenohenrique098@gmail.com')->send(new SendMailGamesToday());
+        User::all()->each(function ($user){
+            Mail::to($user->email)->send(new SendMailGamesToday());
+        });
+
         return 0;
     }
 }

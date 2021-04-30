@@ -18,7 +18,7 @@
         }
 
         * {
-            overflow-x: hidden;
+            /* overflow-x: hidden; */
             margin: 0px;
             padding: 0px;
             font-family: 'RocknRoll One', sans-serif;
