@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ asset('mdl/material.deep_orange-green.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 
-        <title>Gamblers</title>
+        <title>Gamblers {{ isset($title) ? "| {$title}" : '' }}</title>
 
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -59,6 +59,11 @@
                         Jogo
                     </a>
 
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.player.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">person</i>
+                        Jogador
+                    </a>
+
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.team.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">groups</i>
                         Time
@@ -69,24 +74,14 @@
                         Seleção
                     </a>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.team.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">groups</i>
-                        Time
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.player.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">person</i>
-                        Jogador
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.competition.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">emoji_events</i>
+                        Competição
                     </a>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.stadium.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">home</i>
                         Estádio
-                    </a>
-
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.competition.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">emoji_events</i>
-                        Competição
                     </a>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country.index') }}" >

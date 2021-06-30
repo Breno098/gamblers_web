@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => "Informações de {$user->name}"])
 
 @section('content')
     <div class="mdl-grid">

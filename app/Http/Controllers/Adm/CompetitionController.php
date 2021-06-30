@@ -83,7 +83,7 @@ class CompetitionController extends Controller
     public function destroy(Competition $competition)
     {
         try {
-            $competition->update([ 'active' => 0 ]);
+            $competition->update([ 'active' => false ]);
             redirect()->route('adm.competition.index');
         } catch(\Exception $e){
             return redirect()->route('adm.error', [

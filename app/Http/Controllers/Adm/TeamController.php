@@ -14,7 +14,7 @@ class TeamController extends Controller
     public function index()
     {
         return view('adm.team.index', [
-            'teams' => Team::where('type', 'team')->orderBy('name')->paginate(10)
+            'teams' => Team::where('type', 'team')->where('active', true)->orderBy('name')->paginate(10)
         ]);
     }
 
@@ -129,17 +129,11 @@ class TeamController extends Controller
     {
         try {
             $team = Team::find($id);
-            $competitions = $team->competitions;
-            $player = $team->players()->where('name', 'Gol Contra')->first();
-
-            $team->competitions()->sync([]);
-            $team->players()->where('name', 'Gol Contra')->delete();
-            $team->delete();
+            $team->update([ 'active' => false ]);
 
             return redirect()->route('adm.team.index');
         } catch(\Exception $e){
-            $team->competitions()->sync($competitions);
-            $team->player()->create($player);
+            $team->update([ 'active' => true ]);
 
             return redirect()->route('adm.error', [
                 'error' => $e->getCode() === '23000' ? "Time vinculado a outro registro." : $e->getMessage(),

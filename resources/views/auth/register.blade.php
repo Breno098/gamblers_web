@@ -1,9 +1,9 @@
-@extends('auth.layout')
+@extends('auth.layout', [ 'title' => 'Registrar'] )
 
 @section('content')
     <div class="mdl-layout mdl-js-layout">
         <div
-            class="mdl-card mdl-shadow--16dp mdl-cell--6-col"
+            class="mdl-card mdl-shadow--16dp mdl-cell--4-col"
             style="overflow: visible !important; z-index: auto !important; padding: 10px; margin: auto;"
         >
             <div class="mdl-card__supporting-text">
@@ -29,11 +29,28 @@
                         <label class="mdl-textfield__label" for="email">Email</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                        <input class="mdl-textfield__input" type="password" id="password" name="password" required/>
+                        <input 
+                            class="mdl-textfield__input" 
+                            type="password"
+                            id="password" 
+                            name="password" 
+                            required
+                            value="{{ old('password') }}"
+                        />
                         <label class="mdl-textfield__label" for="password">Senha</label>
                     </div>
+                    @error('password')
+                        <div>{{ $message }}</div>
+                    @enderror
+                    
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                        <input class="mdl-textfield__input" type="password" id="password_confirmation" name="password_confirmation" required/>
+                        <input 
+                            class="mdl-textfield__input" 
+                            type="password" 
+                            id="password_confirmation" 
+                            name="password_confirmation" 
+                            required
+                        />
                         <label class="mdl-textfield__label" for="password_confirmation">Confirme a senha</label>
                     </div>
                     @if (session('error_register'))
@@ -43,31 +60,6 @@
                             </div>
                         </div>
                     @endif
-
-                    <div class="mdl-card__supporting-text" style="display: flex; flex-direction: row; justify-content: space-between;">
-                        <div>
-                            <p> Escolha seu avatar </p>
-                        </div>
-                        <div style="display: flex; flex-direction: row; justify-content: space-between;">
-                            <p> Arraste </p>  &nbsp;
-                            <i class="material-icons">arrow_forward</i>
-                        </div>
-                    </div>
-
-                    <div class="mdl-card__supporting-text" >
-                        <div style="overflow: auto; white-space: nowrap;">
-                            @foreach ($avatars as $avatar)
-                                <a style="display: inline-block; padding: 14px; 0">
-                                    <img
-                                        class="avatar"
-                                        src="{{ asset('storage/avatar/' . $avatar ) }}"
-                                        alt="avatar"
-                                        style="height: 100%; width: 120px; border-radius: 50%;"
-                                    />
-                                </a>
-                            @endforeach
-                        </div>
-                    </div>
 
                     <button
                         style="width: 100%; height: 40px; min-width: initial;"

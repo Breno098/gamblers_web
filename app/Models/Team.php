@@ -9,7 +9,12 @@ class Team extends Model
     protected $fillable = [
         'name', 
         'name_photo',
-        'type'
+        'type',
+        'active'
+    ];
+
+    protected $casts = [
+        'active' => 'boolean'
     ];
 
     public function country()
@@ -36,12 +41,4 @@ class Team extends Model
     {
         return $this->hasMany(Goal::class);
     }
-
-    public function getTotalPlayersAttribute()
-    {
-        $data = collect([$this->countryPlayers, $this->players]);
-        return $data->unique();
-    }
-
-
 }

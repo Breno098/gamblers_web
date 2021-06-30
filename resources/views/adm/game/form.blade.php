@@ -1,11 +1,11 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => isset($game) ? 'Alterar Jogo' : 'Cadastrar Jogo' ])
 
 @section('content')
     <div class="mdl-grid">
         <div class="mdl-cell mdl-cell--12-col mdl-card">
             <div class="mdl-card__title">
                 <h1 class="mdl-card__title-text">
-                    <strong>{{ isset($game) ? 'Alterar' : 'Cadastrar' }}</strong>
+                    <strong>{{ isset($game) ? 'Alterar Jogo' : 'Cadastrar Jogo' }}</strong>
                 </h1>
             </div>
 

@@ -23,6 +23,7 @@ class RankingController extends Controller
         $scores = DB::table('scoreboards')
                     ->selectRaw(
                         'users.name             as user_name,
+                        users.avatar            as user_avatar,
                         competitions.name       as competition_name,
                         competitions.season     as competition_season,
                         sum(scoreboards.score)  as total_score'
@@ -34,7 +35,7 @@ class RankingController extends Controller
                     ->where('games.status', 'finished')
                     ->where('competitions.active', true)
                     ->where('competitions.id', $competition->id)
-                    ->groupByRaw('users.id, users.name, competitions.id, competitions.name, competitions.season')
+                    ->groupByRaw('users.id, users.name, users.avatar, competitions.id, competitions.name, competitions.season')
                     ->orderBy('total_score', 'desc')
                     ->paginate(10);
 

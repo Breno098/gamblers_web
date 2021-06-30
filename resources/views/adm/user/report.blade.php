@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => "Informações de {$user->name} | {$competition->name}"])
 
 @section('content')
     <div class="mdl-grid">
@@ -41,20 +41,26 @@
                             @php
                                 $total_score = 0
                             @endphp
-                            @foreach (json_decode($score->report) as $report)
-                                <hr/>
-                                <li class="mdl-list__item mdl-list__item--one-line">
-                                    <span class="mdl-list__item-secondary-content">
-                                        {{ number_format($report->score, 2, '.', '') }}
-                                    </span>
-                                    <span class="mdl-list__item-text-body">
-                                        &nbsp; {{ $report->description }}
-                                    </span>
-                                </li>
-                                @php
-                                    $total_score += $report->score
-                                @endphp
-                            @endforeach
+                                @foreach (json_decode($score->report) as $report)
+                                    @isset($report->score)
+                                        <hr/>
+                                        <li class="mdl-list__item mdl-list__item--one-line">
+                                            <span class="mdl-list__item-secondary-content">
+                                                {{ number_format($report->score, 2, '.', '') }}
+                                            </span>
+                                            <span class="mdl-list__item-text-body">
+                                                &nbsp; {{ $report->description }}
+                                            </span>
+                                        </li>
+                                        @php
+                                            $total_score += $report->score
+                                        @endphp
+                                    @else
+                                        <span class="mdl-list__item-text-body">
+                                            &nbsp; <strong> Nenhum ponto feito </strong>
+                                        </span>
+                                    @endisset
+                                @endforeach
                             <hr/>
                             <li class="mdl-list__item mdl-list__item--one-line mdl-color--accent">
                                 <span class="mdl-list__item-secondary-content">

@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => "Competições Oficiais"])
 
 @section('content')
     <div class="mdl-grid" style="display: flex; justify-content: center">

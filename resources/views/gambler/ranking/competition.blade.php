@@ -9,21 +9,51 @@
                 </h1>
             </div>
 
-            <div class="mdl-card__supporting-text" style="height: 200px; display:flex; flex-direction: row; align-items: flex-end">
+            <div class="mdl-card__supporting-text" style="height: 300px; display:flex; flex-direction: row; align-items: flex-end">
 
                 <div class="mdl-cell mdl-cell--4-col" style="display: flex; flex-direction: column; align-items: center">
+                    @isset($scores[2])
+                        <div>
+                            <img
+                                src="{{ asset('storage/avatar/' . $scores[2]->user_avatar ) }}"
+                                alt="avatar"
+                                style="height: 120px; width: 120px; margin: 15px 0"
+                            />
+                        </div>
+                    @endisset
+
                     <strong>{{ isset($scores[2]) ? $scores[2]->user_name : '--'  }}</strong>
                     <div class="mdl-cell mdl-cell--12-col  mdl-color--primary" style="height: 50px">
                     </div>
                 </div>
 
                 <div class="mdl-cell mdl-cell--4-col" style="display: flex; flex-direction: column; align-items: center">
+                    @isset($scores[0])
+                        <div>
+                            <img
+                                src="{{ asset('storage/avatar/' . $scores[0]->user_avatar ) }}"
+                                alt="avatar"
+                                style="height: 120px; width: 120px; margin: 15px 0"
+                            />
+                        </div>
+                    @endisset
+
                     <strong>{{ isset($scores[0]) ? $scores[0]->user_name : '--'  }}</strong>
                     <div class="mdl-cell mdl-cell--12-col  mdl-color--primary" style="height: 150px">
                     </div>
                 </div>
 
                 <div class="mdl-cell mdl-cell--4-col" style="display: flex; flex-direction: column; align-items: center">
+                    @isset($scores[1])
+                        <div>
+                            <img
+                                src="{{ asset('storage/avatar/' . $scores[1]->user_avatar ) }}"
+                                alt="avatar"
+                                style="height: 120px; width: 120px; margin: 15px 0"
+                            />
+                        </div>
+                    @endisset
+
                     <strong>{{ isset($scores[1]) ? $scores[1]->user_name : '--'  }}</strong>
                     <div class="mdl-cell mdl-cell--12-col  mdl-color--primary" style="height: 100px">
                     </div>

@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => "{$game->teamHome->name} X {$game->teamGuest->name} | {$game->competition->name}" ])
 
 @section('content')
     <div class="mdl-grid" style="width: 100%">
@@ -48,10 +48,8 @@
                                     @php
                                         $players = $game->getOfficialGoalsInTheGameAttribute($player->id);
                                         if($players){
-                                            if($players){
-                                                foreach ($players as $player) {
-                                                    $goalsHome[] = $player;
-                                                }
+                                            foreach ($players as $player) {
+                                                $goalsHome[] = $player;
                                             }
                                         }
                                     @endphp

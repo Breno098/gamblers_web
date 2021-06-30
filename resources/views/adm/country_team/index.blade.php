@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => 'Seleções'])
 
 @section('content')
     <div class="mdl-grid">

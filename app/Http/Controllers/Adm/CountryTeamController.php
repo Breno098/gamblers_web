@@ -14,7 +14,7 @@ class CountryTeamController extends Controller
     public function index()
     {
         return view('adm.country_team.index', [
-            'teams' => Team::where('type', 'country_team')->orderBy('name')->paginate(10)
+            'teams' => Team::where('type', 'country_team')->where('active', true)->orderBy('name')->paginate(10)
         ]);
     }
 

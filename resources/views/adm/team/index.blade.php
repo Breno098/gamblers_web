@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => 'Times'])
 
 @section('content')
     <div class="mdl-grid">

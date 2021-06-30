@@ -1,4 +1,4 @@
-@extends('auth.layout')
+@extends('auth.layout', [ 'title' => 'Login'] )
 
 @section('content')
     <div class="mdl-layout mdl-js-layout">
