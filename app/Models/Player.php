@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Player extends Model
 {
     protected $fillable = [
-        'name', 'position', 'country_id', 'team_id'
+        'name', 
+        'position',
     ];
 
-    protected $hidden = [
-        'created_at', 'updated_at'
-    ];
-
-    public function team()
+    public function teams()
     {
-        return $this->belongsTo(Team::class);
+        return $this->belongsToMany(Team::class, 'team_player', 'player_id', 'team_id');
     }
 
     public function country()
@@ -27,5 +24,15 @@ class Player extends Model
     public function goals()
     {
         return $this->hasMany(Goal::class);
+    }
+
+    public function getTeamAttribute()
+    {
+        return $this->teams()->where('type', 'team')->first();
+    }
+
+    public function getCountryTeamAttribute()
+    {
+        return $this->teams()->where('type', 'country_team')->first();
     }
 }

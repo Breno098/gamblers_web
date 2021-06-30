@@ -18,7 +18,8 @@ class CreatePlayersTable extends Migration
             $table->string('name')->nullable();
             $table->string('position')->nullable();
             $table->foreignId('country_id')->nullable()->constrained();
-            $table->foreignId('team_id')->nullable()->constrained();
+            // $table->foreignId('team_id')->nullable()->constrained();
+            // $table->foreignId('country_team_id')->nullable()->constrained('teams');
             $table->timestamps();
         });
     }

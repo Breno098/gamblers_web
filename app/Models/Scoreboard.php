@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Scoreboard extends Model
 {
     protected $fillable = [
-        'type', 'user_id', 'team_home_scoreboard', 'team_guest_scoreboard', 'game_id', 'score', 'report'
-    ];
-
-    protected $hidden = [
-        'created_at', 'updated_at'
+        'type', 
+        'team_home_scoreboard', 
+        'team_guest_scoreboard', 
+        'score', 
+        'report'
     ];
 
     protected $casts = [

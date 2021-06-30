@@ -7,11 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Competition extends Model
 {
     protected $fillable = [
-        'name', 'active', 'name_photo', 'season'
+        'name', 
+        'active', 
+        'name_photo', 
+        'season'
     ];
 
-    protected $hidden = [
-        'created_at', 'updated_at'
+    protected $casts = [
+        'active' => 'boolean'
     ];
 
     public function teams()

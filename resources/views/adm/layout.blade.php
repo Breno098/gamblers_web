@@ -54,9 +54,19 @@
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country.index') }}" >
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.game.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">sports</i>
+                        Jogo
+                    </a>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.team.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">groups</i>
+                        Time
+                    </a>
+
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country_team.index') }}" >
                         <i class="mdl-color-text--black material-icons" role="presentation">public</i>
-                        País
+                        Seleção
                     </a>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.team.index') }}" >
@@ -79,9 +89,9 @@
                         Competição
                     </a>
 
-                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.game.index') }}" >
-                        <i class="mdl-color-text--black material-icons" role="presentation">sports</i>
-                        Jogo
+                    <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('adm.country.index') }}" >
+                        <i class="mdl-color-text--black material-icons" role="presentation">public</i>
+                        País
                     </a>
 
                     <hr style="width: 90%; margin: auto" class="mdl-color--primary"/>

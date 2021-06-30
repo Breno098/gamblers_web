@@ -17,7 +17,8 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('name_photo')->nullable();
-            $table->foreignId('country_id')->constrained();
+            $table->foreignId('country_id')->nullable()->constrained();
+            $table->enum('type', ['team', 'country_team'])->nullable();
             $table->timestamps();
         });
     }

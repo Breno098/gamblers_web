@@ -25,7 +25,6 @@ class CompetitionController extends Controller
     public function store(CompetitionRequest $request)
     {
         $data = $request->all();
-        $data['active'] = 1;
 
         if($request->photo){
             $name_photo = Carbon::now()->format('YmdHis') . $request->file('photo')->getClientOriginalName();

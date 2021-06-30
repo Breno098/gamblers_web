@@ -2,9 +2,12 @@
 
 namespace App\Services;
 
+use App\Models\Game;
 use App\Models\Goal;
 use App\Models\Player;
 use App\Models\Scoreboard;
+use App\Models\Team;
+use App\Models\User;
 
 class ScoreService
 {
@@ -23,30 +26,51 @@ class ScoreService
             ]);
         } else {
             $scoreboard = Scoreboard::create([
-                'game_id'   => $request->game['id'],
                 'team_home_scoreboard' => count($request->goalsTeamHome),
                 'team_guest_scoreboard' => count($request->goalsTeamGuest),
                 'type'      => $type,
-                'user_id'   => $user_id,
             ]);
+
+            $game_id = $request->game['id'];
+            $game = Game::find($game_id);
+            $scoreboard->game()->associate($game);
+
+            if($user_id){
+                $user = User::find($user_id);
+                $scoreboard->user()->associate($user);
+            }
+
+            $scoreboard->save();
         }
 
         Goal::where('scoreboard_id', $scoreboard->id)->delete();
 
         collect($request->goalsTeamHome)->each(function($player) use ($scoreboard) {
-            Goal::create([
-                'player_id' => $player['id'],
-                'team_id'   => $player['team_id'],
-                'scoreboard_id' => $scoreboard->id
-            ]);
+            $goal = new Goal;
+
+            $player_goal = Player::find($player['id']);
+            $goal->player()->associate($player_goal);
+
+            $team_goal = Team::find($player['pivot']['team_id']);
+            $goal->team()->associate($team_goal);
+
+            $goal->scoreboard()->associate($scoreboard);
+
+            $goal->save();
         });
 
         collect($request->goalsTeamGuest)->each(function($player) use ($scoreboard) {
-            Goal::create([
-                'player_id' => $player['id'],
-                'team_id'   => $player['team_id'],
-                'scoreboard_id' => $scoreboard->id
-            ]);
+            $goal = new Goal;
+
+            $player_goal = Player::find($player['id']);
+            $goal->player()->associate($player_goal);
+
+            $team_goal = Team::find($player['pivot']['team_id']);
+            $goal->team()->associate($team_goal);
+
+            $goal->scoreboard()->associate($scoreboard);
+
+            $goal->save();
         });
     }
 

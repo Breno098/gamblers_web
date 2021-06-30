@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Adm\CompetitionController;
 use App\Http\Controllers\Adm\CountryController;
+use App\Http\Controllers\Adm\CountryTeamController;
 use App\Http\Controllers\Adm\DashboardController;
 use App\Http\Controllers\Adm\GameController;
 use App\Http\Controllers\Adm\OfficialController;
@@ -13,11 +14,10 @@ use App\Http\Controllers\Adm\UserController;
 
 use App\Http\Controllers\Gambler\DashboardController as GamblerDashboardController;
 use App\Http\Controllers\Gambler\OfficialController as GamblerOfficialController;
-
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Gambler\RankingController as GamblerRankingController;
 use App\Http\Controllers\Gambler\UserController as GamblerUserController;
-use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function (){
@@ -49,6 +49,7 @@ Route::prefix('adm')->name('adm.')->middleware(['auth', 'adm'])->group(function 
 
     Route::resource('country', CountryController::class);
     Route::resource('team', TeamController::class);
+    Route::resource('country_team', CountryTeamController::class);
     Route::resource('player', PlayerController::class);
     Route::resource('stadium', StadiumController::class);
     Route::resource('competition', CompetitionController::class);

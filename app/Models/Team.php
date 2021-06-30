@@ -7,11 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Team extends Model
 {
     protected $fillable = [
-        'name', 'name_photo', 'country_id'
-    ];
-
-    protected $hidden = [
-        'created_at', 'updated_at'
+        'name', 
+        'name_photo',
+        'type'
     ];
 
     public function country()
@@ -23,15 +21,27 @@ class Team extends Model
     {
         return $this->belongsToMany(Competition::class, 'competition_team', 'team_id', 'competition_id');
     }
-
+ 
     public function players()
     {
-        return $this->hasMany(Player::class);
+        return $this->belongsToMany(Player::class, 'team_player', 'team_id', 'player_id');
+    }
+
+    public function countryPlayers()
+    {
+        return $this->hasMany(Player::class, 'country_team_id');
     }
 
     public function goals()
     {
         return $this->hasMany(Goal::class);
     }
+
+    public function getTotalPlayersAttribute()
+    {
+        $data = collect([$this->countryPlayers, $this->players]);
+        return $data->unique();
+    }
+
 
 }

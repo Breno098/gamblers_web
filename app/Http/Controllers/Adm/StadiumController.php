@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Adm\StadiumRequest;
 use App\Models\Country;
 use App\Models\Stadium;
-use Illuminate\Support\Facades\Redirect;
 
 class StadiumController extends Controller
 {
@@ -26,7 +25,15 @@ class StadiumController extends Controller
 
     public function store(StadiumRequest $request)
     {
-        Stadium::create($request->all());
+        $data = $request->all();
+
+        $stadium = Stadium::create($data);
+
+        $country_id = $data['country_id'];
+        $country = Country::find($country_id);
+        $stadium->country()->associate($country);
+
+        $stadium->save();
 
         return redirect()->route('adm.stadium.index');
     }
@@ -41,9 +48,17 @@ class StadiumController extends Controller
 
     public function update(StadiumRequest $request, Stadium $stadium)
     {
-        $stadium->update($request->all());
+        $data = $request->all();
 
-        return Redirect::route('adm.stadium.index');
+        $stadium->update($data);
+
+        $country_id = $data['country_id'];
+        $country = Country::find($country_id);
+        $stadium->country()->associate($country);
+
+        $stadium->save();
+
+        return redirect()->route('adm.stadium.index');
     }
 
     public function show($id)

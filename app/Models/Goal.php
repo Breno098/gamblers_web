@@ -7,14 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Goal extends Model
 {
     protected $fillable = [
-        'minute', 'team_id', 'player_id', 'scoreboard_id'
-    ];
-
-    protected $hidden = [
-        'created_at', 'updated_at'
-    ];
-
-    protected $casts = [
+        'minute', 
     ];
 
     public function scoreboard()

@@ -17,6 +17,7 @@
                                 <th class="mdl-data-table__cell--non-numeric">Posição</th>
                                 <th class="mdl-data-table__cell--non-numeric">Nome</th>
                                 <th class="mdl-data-table__cell--non-numeric">Time</th>
+                                <th class="mdl-data-table__cell--non-numeric">Seleção</th>
                                 <th class="mdl-data-table__cell--non-numeric">País</th>
                                 <th class="mdl-data-table__cell--non-numeric"></th>
                             </tr>
@@ -32,7 +33,7 @@
                                             @case('VOL') class="mdl-chip mdl-color--green-300"  @break
                                             @case('ZAG') class="mdl-chip mdl-color--blue-300"   @break
                                             @case('LT')  class="mdl-chip mdl-color--blue-300"   @break
-                                            @case('GOL') class="mdl-chip mdl-color--brown-300" @break
+                                            @case('GOL') class="mdl-chip mdl-color--brown-300"  @break
                                             @default     class="mdl-chip"
                                         @endswitch
                                     >
@@ -43,6 +44,7 @@
                                 </td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 35%">{{ $player->name }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->team->name }}</td>
+                                <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->country_team->name }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->country->name }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 10%">
                                     <a

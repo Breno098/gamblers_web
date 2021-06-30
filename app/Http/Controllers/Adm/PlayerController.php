@@ -13,7 +13,7 @@ class PlayerController extends Controller
     public function index()
     {
         return view('adm.player.index', [
-            'players' => Player::whereNotNull('country_id')->orderBy('name')->paginate(10),
+            'players' => Player::where("name", '!=', "Gol Contra")->orderBy('name')->paginate(10),
         ]);
     }
 
@@ -21,14 +21,34 @@ class PlayerController extends Controller
     {
         return view('adm.player.form', [
             'countries' => Country::orderBy('name')->get(),
-            'teams' => Team::orderBy('name')->get(),
+            'teams' => Team::where('type','team')->orderBy('name')->get(),
+            'country_teams' => Team::where('type','country_team')->orderBy('name')->get(),
             'positions' => ['GO', 'ZAG', 'LT', 'VOL', 'MEI', 'ATA']
         ]);
     }
 
     public function store(PlayerRequest $request)
     {
-        Player::create($request->all());
+        $data = $request->all();
+
+        $player = Player::create($data);
+
+        $team_id = $data['team_id'];
+        $team = Team::find($team_id);
+
+        $country_team_id = $data['country_team_id'];
+        $country_team = Team::find($country_team_id);
+
+        $player->teams()->sync([
+            $team->id,
+            $country_team->id
+        ]);
+
+        $country_id = $data['country_id'];
+        $country = Country::find($country_id);
+        $player->country()->associate($country);
+
+        $player->save();
 
         return redirect()->route('adm.player.index');
     }
@@ -38,14 +58,34 @@ class PlayerController extends Controller
         return view('adm.player.form', [
             'player' => $player,
             'countries' => Country::orderBy('name')->get(),
-            'teams' => Team::orderBy('name')->get(),
+            'teams' => Team::where('type','team')->orderBy('name')->get(),
+            'country_teams' => Team::where('type','country_team')->orderBy('name')->get(),
             'positions' => ['GO', 'ZAG', 'LT', 'VOL', 'MEI', 'ATA']
         ]);
     }
 
     public function update(PlayerRequest $request, Player $player)
     {
-        $player->update($request->all());
+        $data = $request->all();
+
+        $player->update($data);
+
+        $team_id = $data['team_id'];
+        $team = Team::find($team_id);
+
+        $country_team_id = $data['country_team_id'];
+        $country_team = Team::find($country_team_id);
+
+        $player->teams()->sync([
+            $team->id,
+            $country_team->id
+        ]);
+
+        $country_id = $data['country_id'];
+        $country = Country::find($country_id);
+        $player->country()->associate($country);
+
+        $player->save();
 
         return redirect()->route('adm.player.index');
     }

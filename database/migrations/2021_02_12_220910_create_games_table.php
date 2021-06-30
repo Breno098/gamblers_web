@@ -21,10 +21,10 @@ class CreateGamesTable extends Migration
             $table->string('stage')->nullable();
 
             $table->foreignId('user_id')->nullable()->constrained();
-            $table->foreignId('team_home_id')->constrained('teams');
-            $table->foreignId('team_guest_id')->constrained('teams');
-            $table->foreignId('stadium_id')->constrained();
-            $table->foreignId('competition_id')->constrained();
+            $table->foreignId('team_home_id')->nullable()->constrained('teams');
+            $table->foreignId('team_guest_id')->nullable()->constrained('teams');
+            $table->foreignId('stadium_id')->nullable()->constrained();
+            $table->foreignId('competition_id')->nullable()->constrained();
 
             $table->timestamps();
         });

@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Adm;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Auth;
 
-class PlayerRequest extends FormRequest
+class CountryTeamRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +13,7 @@ class PlayerRequest extends FormRequest
      */
     public function authorize()
     {
-        return Auth::user()->type === 'adm';
+        return true;
     }
 
     /**
@@ -26,10 +25,6 @@ class PlayerRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'position' => 'required',
-            'country_id' => 'required',
-            'team_id' => 'required',
-            'country_team_id' => 'required'
         ];
     }
 
@@ -37,10 +32,7 @@ class PlayerRequest extends FormRequest
     {
         return [
             'name.required' => 'Nome obrigatório.',
-            'position.required' => 'Informe a posição.',
-            'country_id.required' => 'Selecione o país.',
-            'team_id.required' => 'Selecione o time.',
-            'country_team_id.required' => 'Selecione a seleção.'
+            'photo.image' => 'Parece que o arquivo não é uma imagem. Escolha uma foto e tente novamente.'
         ];
     }
 }

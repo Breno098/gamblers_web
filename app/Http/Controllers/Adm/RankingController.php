@@ -35,6 +35,7 @@ class RankingController extends Controller
                     ->where('competitions.active', true)
                     ->where('competitions.id', $competition->id)
                     ->groupByRaw('users.id, users.name, competitions.id, competitions.name, competitions.season')
+                    ->orderBy('total_score', 'desc')
                     ->paginate(10);
 
         return view('adm.ranking.competition', [

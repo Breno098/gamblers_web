@@ -32,13 +32,29 @@
                                     <option
                                         style="width: 400px"
                                         value="{{ $team->id }}"
-                                        {{  isset($player) && $team->id === $player->team_id ? 'selected' : null }}
+                                        {{  isset($player) && $team->id === $player->team->id ? 'selected' : null }}
                                     >
                                         {{ $team->name }}
                                     </option>
                                 @endforeach
                             </select>
                             <label class="mdl-textfield__label" for="country_id">Time</label>
+                        </div>
+
+                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
+                            <select class="mdl-textfield__input" id="country_team_id" name="country_team_id" required>
+                                <option style="width: 400px"></option>
+                                @foreach ($country_teams as $country_team)
+                                    <option
+                                        style="width: 400px"
+                                        value="{{ $country_team->id }}"
+                                        {{  isset($player) && $country_team->id === $player->country_team->id ? 'selected' : null }}
+                                    >
+                                        {{ $country_team->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label class="mdl-textfield__label" for="country_team_id">Seleção Nacional</label>
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
@@ -48,7 +64,7 @@
                                     <option
                                         style="width: 400px"
                                         value="{{ $country->id }}"
-                                        {{  isset($player) && $country->id === $player->country_id ? 'selected' : null }}
+                                        {{  isset($player) && $country->id === $player->country->id ? 'selected' : null }}
                                     >
                                         {{ $country->name }}
                                     </option>

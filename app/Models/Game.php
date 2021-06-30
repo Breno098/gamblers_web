@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\Auth;
 class Game extends Model
 {
     protected $fillable = [
-        'date', 'time', 'status', 'user_id', 'team_home_id', 'team_guest_id', 'stadium_id', 'competition_id', 'stage'
-    ];
-
-    protected $hidden = [
-        'created_at', 'updated_at'
+        'date', 
+        'time', 
+        'status', 
+        'stage'
     ];
 
     protected $casts = [

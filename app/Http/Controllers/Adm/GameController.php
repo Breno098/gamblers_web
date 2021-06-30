@@ -34,7 +34,25 @@ class GameController extends Controller
     {
         $data = $request->all();
         $data['date'] = $data['date'] . ' ' . $data['time'];
-        Game::create($data);
+        $game = Game::create($data);
+
+        $stadium_id = $data['stadium_id'];
+        $stadium = Stadium::find($stadium_id);
+        $game->stadium()->associate($stadium);
+
+        $competition_id = $data['competition_id'];
+        $competition = Competition::find($competition_id);
+        $game->competition()->associate($competition);
+
+        $team_home_id = $data['team_home_id'];
+        $teamHome = Team::find($team_home_id);
+        $game->teamHome()->associate($teamHome);
+
+        $team_guest_id = $data['team_guest_id'];
+        $teamGuest = Team::find($team_guest_id);
+        $game->teamGuest()->associate($teamGuest);
+
+        $game->save();
 
         return redirect()->route('adm.game.index');
     }
