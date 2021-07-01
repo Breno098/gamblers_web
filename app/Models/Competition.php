@@ -19,7 +19,7 @@ class Competition extends Model
 
     public function teams()
     {
-        return $this->belongsToMany(Team::class, 'competition_team', 'team_id', 'Competition_id');
+        return $this->belongsToMany(Team::class, 'competition_team', 'competition_id', 'team_id');
     }
 
     public function users()

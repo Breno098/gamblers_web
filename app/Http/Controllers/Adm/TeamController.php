@@ -7,6 +7,7 @@ use App\Http\Requests\Adm\TeamRequest;
 use App\Models\Competition;
 use App\Models\Country;
 use App\Models\Team;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class TeamController extends Controller
@@ -139,5 +140,18 @@ class TeamController extends Controller
                 'error' => $e->getCode() === '23000' ? "Time vinculado a outro registro." : $e->getMessage(),
             ]);
         }
+    }
+
+    public function byCompetition(Request $request)
+    {
+        if(!$request->competitionId){
+            return response()->json(['teams' => []]);
+        }
+
+        $competition = Competition::find($request->competitionId);
+
+        $teams = $competition->teams()->select('name', 'id')->where('active', true)->get();
+
+        return response()->json(['teams' => $teams]);
     }
 }

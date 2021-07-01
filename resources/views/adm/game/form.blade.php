@@ -31,16 +31,34 @@
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                            <select class="mdl-textfield__input" id="team_home_id" name="team_home_id" required>
-                                <option></option>
-                                @foreach ($teams as $team)
+                            <select class="mdl-textfield__input" id="competition_id" name="competition_id" required>
+                                <option style="width: 400px"></option>
+                                @foreach ($competitions as $competition)
                                     <option
-                                        value="{{ $team->id }}"
-                                        {{  isset($game) && $team->id === $game->team_home_id ? 'selected' : null }}
+                                        style="width: 400px"
+                                        value="{{ $competition->id }}"
+                                        {{  isset($game) && $competition->id === $game->competition_id ? 'selected' : null }}
                                     >
-                                        {{ $team->name }}
+                                        {{ $competition->name }}
                                     </option>
                                 @endforeach
+                            </select>
+                            <label class="mdl-textfield__label" for="competition_id">Competição</label>
+                        </div>
+
+                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
+                            <select class="mdl-textfield__input" id="team_home_id" name="team_home_id" required>
+                                <option></option>
+                                @isset($teams)
+                                    @foreach ($teams as $team)
+                                        <option
+                                            value="{{ $team->id }} "
+                                            {{  isset($game) && $team->id === $game->team_home_id ? 'selected' : null }}
+                                        >
+                                            {{ $team->name }}
+                                        </option>
+                                    @endforeach
+                                @endisset
                             </select>
                             <label class="mdl-textfield__label" for="team_home_id">Time da Casa</label>
                         </div>
@@ -48,14 +66,16 @@
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
                             <select class="mdl-textfield__input" id="team_guest_id" name="team_guest_id" required>
                                 <option></option>
-                                @foreach ($teams as $team)
-                                    <option
-                                        value="{{ $team->id }} "
-                                        {{  isset($game) && $team->id === $game->team_guest_id ? 'selected' : null }}
-                                    >
-                                        {{ $team->name }}
-                                    </option>
-                                @endforeach
+                                @isset($teams)
+                                    @foreach ($teams as $team)
+                                        <option
+                                            value="{{ $team->id }} "
+                                            {{  isset($game) && $team->id === $game->team_guest_id ? 'selected' : null }}
+                                        >
+                                            {{ $team->name }}
+                                        </option>
+                                    @endforeach
+                                @endisset
                             </select>
                             <label class="mdl-textfield__label" for="team_guest_id">Time Visitante</label>
                         </div>
@@ -73,22 +93,6 @@
                                 @endforeach
                             </select>
                             <label class="mdl-textfield__label" for="stadium_id">Estádio</label>
-                        </div>
-
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                            <select class="mdl-textfield__input" id="competition_id" name="competition_id" required>
-                                <option style="width: 400px"></option>
-                                @foreach ($competitions as $competition)
-                                    <option
-                                        style="width: 400px"
-                                        value="{{ $competition->id }}"
-                                        {{  isset($game) && $competition->id === $game->competition_id ? 'selected' : null }}
-                                    >
-                                        {{ $competition->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            <label class="mdl-textfield__label" for="competition_id">Competição</label>
                         </div>
 
                         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
@@ -140,25 +144,67 @@
             </div>
         </div>
 
+    <dialog class="mdl-dialog" id="dialog_teams">
+        <div class="mdl-dialog__content">
+            <p> Carregando Times... </p>
+        </div>
+    </dialog>
+
+    <script>
+        var dialog_teams = document.querySelector('#dialog_teams');
+
+        let competition = document.querySelector('#competition_id');
+
+        competition.onchange = competitionTeams;
+
+        function competitionTeams(e){
+            let competitionId = e.target.value;
+
+            if(! competitionId){
+                document.querySelector('#team_home_id').innerHTML = '<option></option>';
+                document.querySelector('#team_guest_id').innerHTML = '<option></option>';
+                return;
+            }
+
+            dialog_teams.showModal();
+
+            fetch( "{{ route('adm.teams.by-competition') }}", {
+                method: "POST",
+                headers: { "Content-Type": "application/json", 'X-CSRF-TOKEN': "{{ csrf_token() }}" },
+                body: JSON.stringify({ competitionId })
+            })
+            .then( data => data.json())
+            .then((response) => {
+                let select_html = '<option></option>';
+                response.teams.map(team => select_html += `<option value="${team.id}"> ${team.name} </option>`)
+
+                document.querySelector('#team_home_id').innerHTML = select_html;
+                document.querySelector('#team_guest_id').innerHTML = select_html;
+
+                dialog_teams.close();
+            });
+        }
+    </script>
 
     @isset($game)
-        <dialog class="mdl-dialog">
+        <dialog class="mdl-dialog" id="dialog_delete">
             <h4 class="mdl-dialog__title">Confirmar</h4>
             <div class="mdl-dialog__content">
-                <p> Deletar {{ $game->name ?? '' }} ? </p>
+                <p> Deletar jogo entre: </p>
+                <p> {{ $game->teamHome->name }} X {{ $game->teamGuest->name }} ? </p>
             </div>
             <div class="mdl-dialog__actions">
-                    <form action="{{ route('adm.game.destroy', ['game' => $game ?? null ]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--red-500"><i class="material-icons">check</i></button>
-                    </form>
-                    <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500 close"><i class="material-icons">close</i></button>
+                <form action="{{ route('adm.game.destroy', ['game' => $game ?? null ]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--red-500"><i class="material-icons">check</i></button>
+                </form>
+                <button type="button" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--raised mdl-color--green-500 close"><i class="material-icons">close</i></button>
             </div>
         </dialog>
 
         <script>
-            var dialog = document.querySelector('dialog');
+            var dialog = document.querySelector('#dialog_delete');
             var showDialogButton = document.querySelector('#show-dialog');
             if (! dialog.showModal) {
                 dialogPolyfill.registerDialog(dialog);

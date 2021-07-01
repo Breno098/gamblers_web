@@ -58,6 +58,8 @@ Route::prefix('adm')->name('adm.')->middleware(['auth', 'adm'])->group(function 
     Route::resource('competition', CompetitionController::class);
     Route::resource('game', GameController::class);
 
+    Route::post('/team/by-competition', [TeamController::class, 'byCompetition'])->name('teams.by-competition');
+
     Route::get('/official/competitions', [OfficialController::class, 'competitions'])->name('official.competitions');
     Route::get('/official/competition_games/{competition}', [OfficialController::class, 'competitionGames'])->name('official.competitionGames');
     Route::get('/official/game/{game}', [OfficialController::class, 'game'])->name('official.game');
