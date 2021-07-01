@@ -1,4 +1,4 @@
-@extends('layout.app')
+@extends('gambler.layout', ['title' => $error_title ?? 'Erro!' ])
 
 @section('content')
     <style>

@@ -32,7 +32,9 @@ class LoginController extends Controller
 
     public function showForm()
     {
-        return view('auth.login');
+        return view('auth.login', [
+            'forgot_password' => false
+        ]);
     }
 
     public function showFormRegister()
@@ -70,7 +72,6 @@ class LoginController extends Controller
         };
 
         return $this->login($request);
-
     }
 
 

@@ -14,7 +14,6 @@
                     action="{{ isset($country) ? route('adm.country.update', ['country' => $country]) : route('adm.country.store') }}"
                     method="POST"
                 >
-
                     @method( isset($country) ? 'PUT' : 'POST')
                     <div style="display: flex; flex-direction: column">
                         @csrf

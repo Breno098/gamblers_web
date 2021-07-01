@@ -1,4 +1,4 @@
-@extends('adm.layout', ['title' => $error_title ?? 'Erro' ])
+@extends('adm.layout', ['title' => $error_title ?? 'Erro!' ])
 
 @section('content')
     <style>

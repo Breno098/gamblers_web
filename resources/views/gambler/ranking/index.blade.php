@@ -1,4 +1,4 @@
-@extends('gambler.layout')
+@extends('gambler.layout', ['title' => 'Ranking | Competições'])
 
 @section('content')
     <div class="mdl-grid" style="display: flex; justify-content: center">

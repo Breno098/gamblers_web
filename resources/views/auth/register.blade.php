@@ -18,7 +18,6 @@
             <div class="mdl-card__supporting-text">
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
                         <input class="mdl-textfield__input" id="name" name="name" required/>
                         <label class="mdl-textfield__label" for="name">Nome</label>
@@ -29,14 +28,7 @@
                         <label class="mdl-textfield__label" for="email">Email</label>
                     </div>
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                        <input 
-                            class="mdl-textfield__input" 
-                            type="password"
-                            id="password" 
-                            name="password" 
-                            required
-                            value="{{ old('password') }}"
-                        />
+                        <input class="mdl-textfield__input" type="password" id="password" name="password" required/>
                         <label class="mdl-textfield__label" for="password">Senha</label>
                     </div>
                     @error('password')
@@ -44,13 +36,7 @@
                     @enderror
                     
                     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                        <input 
-                            class="mdl-textfield__input" 
-                            type="password" 
-                            id="password_confirmation" 
-                            name="password_confirmation" 
-                            required
-                        />
+                        <input class="mdl-textfield__input" type="password" id="password_confirmation" name="password_confirmation" required/>
                         <label class="mdl-textfield__label" for="password_confirmation">Confirme a senha</label>
                     </div>
                     @if (session('error_register'))

@@ -1,4 +1,4 @@
-@extends('gambler.layout')
+@extends('gambler.layout', ['title' => 'Alterar Avatar'])
 
 @section('content')
     <div class="mdl-grid">

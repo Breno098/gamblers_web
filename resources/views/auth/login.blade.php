@@ -45,13 +45,14 @@
 
     <div>
         <div class="mdl-card__actions">
-            <a
-                class="mdl-button mdl-js-button mdl-button--primary"
-                href="{{ route('register') }}"
-            >
+            <a class="mdl-button mdl-js-button mdl-button--primary" href="{{ route('register') }}">
                 Registrar-se
             </a>
-            <button class="mdl-button mdl-js-button mdl-button--primary">Esqueci a senha</button>
+            @if($forgot_password ?? false)
+                <button class="mdl-button mdl-js-button mdl-button--primary">
+                    Esqueci a senha
+                </button>
+            @endif
         </div>
     </div>
 @endsection

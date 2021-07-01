@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="{{ asset('mdl/material.deep_orange-green.min.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/app.css') }}" />
 
-        <title>Gamblers</title>
+        <title>Gamblers {{ isset($title) ? "| {$title}" : '' }}</title>
 
         <meta name="mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-capable" content="yes">
@@ -66,7 +66,7 @@
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('dashboard') }}">
                         <i class="mdl-color-text--black material-icons" role="presentation">home</i>
-                        DashBoard
+                        Início
                     </a>
 
                     <a class="mdl-navigation__link mdl-color-text--black" href="{{ route('official.competitions') }}">

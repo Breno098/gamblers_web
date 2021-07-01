@@ -33,6 +33,9 @@ Route::middleware('auth')->group(function (){
     Route::get('/ranking/{competition}', [GamblerRankingController::class, 'competition'])->name('ranking.competition');
 
     Route::get('/user', [GamblerUserController::class, 'index'])->name('user.index');
+    Route::get('/user/info', [GamblerUserController::class, 'info'])->name('user.info');
+    Route::post('/user/update/{user}', [GamblerUserController::class, 'update'])->name('user.update');
+    Route::get('/user/scores', [GamblerUserController::class, 'scores'])->name('user.scores');
     Route::get('/user/report/{competition}', [GamblerUserController::class, 'report'])->name('user.report');
     Route::get('/user/avatar', [GamblerUserController::class, 'avatar'])->name('user.avatar');
     Route::get('/user/update_avatar/{avatar}', [GamblerUserController::class, 'updateAvatar'])->name('user.update_avatar');

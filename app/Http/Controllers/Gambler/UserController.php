@@ -4,12 +4,57 @@ namespace App\Http\Controllers\Gambler;
 
 use App\Http\Controllers\Controller;
 use App\Models\Competition;
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
     public function index()
+    {
+        return view('gambler.user.index', [
+            'user' => Auth::user(),
+        ]);
+    }
+
+    public function info()
+    {
+        return view('gambler.user.info', [
+            'user' => Auth::user(),
+        ]);
+    }
+
+    public function update(Request $request, User $user)
+    {
+        if (!$request->post('password')) {
+            return redirect()->route('user.info')->with('error_password', 'Digite a senha para alterar.');
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        if (!Auth::attempt($credentials)) {
+            return redirect()->route('user.info')->with('error_password', 'Senha inválida.');
+        }
+
+        $user->name = $request->post('name');
+        $user->email = $request->post('email');
+
+        if($newPassword = $request->post('new_password')){
+            if(Str::length($newPassword) < 8){
+                return redirect()->route('user.info')->with('error_new_password', 'Nova senha precisa ter no minimo 8 caracteres.');
+            }
+            $user->password = Hash::make($newPassword);
+        }
+
+        $user->save();
+
+        return redirect()->route('user.info');
+    }
+
+    public function scores()
     {
         $scores = DB::table('scoreboards')
                     ->selectRaw(
@@ -29,7 +74,7 @@ class UserController extends Controller
                     ->groupByRaw('users.id, users.name, competitions.id, competitions.name, competitions.season')
                     ->paginate(10);
 
-        return view('gambler.user.index', [
+        return view('gambler.user.scores', [
             'user' => Auth::user(),
             'scores' => $scores
         ]);
@@ -89,10 +134,7 @@ class UserController extends Controller
 
     public function updateAvatar(string $avatar)
     {
-        Auth::user()->update([
-            'avatar' => $avatar
-        ]);
-
+        Auth::user()->update(['avatar' => $avatar]);
         return redirect()->route('user.index');
     }
 }

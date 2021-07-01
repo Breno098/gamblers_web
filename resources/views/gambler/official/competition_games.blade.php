@@ -1,4 +1,4 @@
-@extends('gambler.layout')
+@extends('gambler.layout', ['title' => $games->count() > 0 ? "{$games->count()} jogos" : 'Não há jogos no momento.'])
 
 @section('content')
     <div class="mdl-grid" style="display: flex; justify-content: center">

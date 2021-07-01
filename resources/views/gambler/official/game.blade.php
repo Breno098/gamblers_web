@@ -1,4 +1,4 @@
-@extends('gambler.layout')
+@extends('gambler.layout', ['title' => "{$game->teamHome->name} X {$game->teamGuest->name} | {$game->competition->name}" ])
 
 @section('content')
     <div class="mdl-grid" style="width: 100%">

@@ -1,4 +1,4 @@
-@extends('adm.layout')
+@extends('adm.layout', ['title' => "Ranking | {$competition->name}"])
 
 @section('content')
     <div class="mdl-grid">
