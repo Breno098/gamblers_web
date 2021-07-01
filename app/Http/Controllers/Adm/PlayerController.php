@@ -33,16 +33,19 @@ class PlayerController extends Controller
 
         $player = Player::create($data);
 
+        $syncs = []; 
+        
         $team_id = $data['team_id'];
         $team = Team::find($team_id);
-
-        $country_team_id = $data['country_team_id'];
-        $country_team = Team::find($country_team_id);
-
-        $player->teams()->sync([
-            $team->id,
-            $country_team->id
-        ]);
+        
+        $syncs[] =  $team->id;
+        
+        if($country_team_id = $data['country_team_id']){
+             $country_team = Team::find($country_team_id);
+             $syncs[] = $country_team->id;
+        }
+        
+        $player->teams()->sync($syncs);
 
         $country_id = $data['country_id'];
         $country = Country::find($country_id);
@@ -70,16 +73,19 @@ class PlayerController extends Controller
 
         $player->update($data);
 
+        $syncs = []; 
+        
         $team_id = $data['team_id'];
         $team = Team::find($team_id);
-
-        $country_team_id = $data['country_team_id'];
-        $country_team = Team::find($country_team_id);
-
-        $player->teams()->sync([
-            $team->id,
-            $country_team->id
-        ]);
+        
+        $syncs[] =  $team->id;
+        
+        if($country_team_id = $data['country_team_id']){
+             $country_team = Team::find($country_team_id);
+             $syncs[] = $country_team->id;
+        }
+        
+        $player->teams()->sync($syncs);
 
         $country_id = $data['country_id'];
         $country = Country::find($country_id);

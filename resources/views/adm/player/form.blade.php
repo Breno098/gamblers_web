@@ -42,7 +42,7 @@
                         </div>
 
                          <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 100%">
-                            <select class="mdl-textfield__input" id="country_team_id" name="country_team_id" required>
+                            <select class="mdl-textfield__input" id="country_team_id" name="country_team_id">
                                 <option style="width: 400px"></option>
                                 @foreach ($country_teams as $country_team)
                                     <option

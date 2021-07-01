@@ -44,7 +44,7 @@
                                 </td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 35%">{{ $player->name }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->team->name }}</td>
-                                <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->country_team->name }}</td>
+                                <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->country_team->name ?? '--' }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 22.5%">{{ $player->country->name }}</td>
                                 <td class="mdl-data-table__cell--non-numeric" style="width: 10%">
                                     <a
